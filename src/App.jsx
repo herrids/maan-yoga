@@ -1,33 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom"
+
+import { useEffect } from "react";
+
+import { useUser } from "./context/UserContext";
+
+import Header from "./components/Header/Header";
+
+import Main from './views/Main'
+import New from './views/New'
+import Error404 from './views/Error404'
+import Login from './views/Login'
+import Flow from './views/Flow'
+
+import './App.scss'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const {loggedInUser} = useUser()
+
 
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <BrowserRouter>
+        {loggedInUser && <Header />}
+        <Routes>
+          <Route path="/" element={
+            loggedInUser ? <Navigate to="/flows"/> : <Navigate to="/login"/>
+          }/>
+          <Route path="/flows" element={
+            loggedInUser? <Main /> : <Navigate to="/login"/>
+          }/>
+          <Route path="/new" element={
+            loggedInUser? <New /> : <Navigate to="/login"/>
+          }/>
+          <Route path="/flows/:id" element={
+            loggedInUser? <Flow /> : <Navigate to="/flows"/>
+          }/>
+          <Route path="/flows/:id/edit" element={
+            loggedInUser? <New /> : <Navigate to="/flows"/>
+          }/>
+          <Route path="/login" element={
+            !loggedInUser? <Login /> : <Navigate to="/flows"/>
+          }/>
+          <Route path="*" element={
+            loggedInUser? <Error404 /> : <Navigate to="/login"/>
+          } />
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 }

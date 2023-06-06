@@ -1,0 +1,14 @@
+.poses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-gap: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 50px
+  }
+  
+  .poses-grid img {
+    width: 100%;
+    height: auto;
+  }
