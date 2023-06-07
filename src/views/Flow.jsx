@@ -21,7 +21,6 @@ export default function() {
         const fetchRoutine = async () => {
             const result = await getRoutine(id);
             setRoutine(result);
-            console.log(result)
         };
         fetchRoutine();
     }, [id])
@@ -31,7 +30,6 @@ export default function() {
             (<Navigate to="/" />);
         }
     }, [routine])
-    console.log(routine)
     return (
         <>
             <div className="routine-controls">

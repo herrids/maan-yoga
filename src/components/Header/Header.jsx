@@ -11,8 +11,6 @@ export default function Header() {
 
     const { t, i18n } = useTranslation();
 
-    console.log(i18n.language)
-
     const handleLogout = async () => {
         try {
           await auth.signOut();
