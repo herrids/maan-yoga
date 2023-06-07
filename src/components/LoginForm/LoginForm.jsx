@@ -1,5 +1,6 @@
 import { signIn } from "../../../firebase"
 import { useState } from "react";
+import { useTranslation } from 'react-i18next';
 
 import TextField from "../atoms/TextField/TextField";
 import Button from "../atoms/Button/Button";
@@ -12,11 +13,13 @@ export default function () {
     const [password, setPassword] = useState("")
     const [error, setError] = useState('');
 
+    const { t } = useTranslation();
+
     const handleLogin = async (e) => {
       try {
         await signIn(email, password);
       } catch (error) {
-        setError("Login nicht erfolgreich");
+        setError(t("loginError"));
       }
     };
 
@@ -42,7 +45,7 @@ export default function () {
           <Button 
             clickHandler={handleLogin}
             type="primary"
-            text="Anmelden"
+            text={t("loginButton")}
           />
         </div>
       </>

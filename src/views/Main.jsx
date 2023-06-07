@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next';
 
 import { getUserRoutines } from "../../firebase";
 import { useUser } from "../context/UserContext";
@@ -8,6 +9,8 @@ import RoutineCard from "../components/RoutineCard/RoutineCard";
 export default function RoutineOverview() {
     const [routines, setRoutines] = useState([])
     const {loggedInUser} = useUser()
+
+    const { t } = useTranslation();
 
     useEffect(()=>{
         getUserRoutines(loggedInUser.email)
@@ -25,7 +28,7 @@ export default function RoutineOverview() {
                     key={index}
                     routine={routine}
                 />
-                )) : <p>Noch keinen Flow erstellt</p>}
+                )) : <p>{t("noFlow")}</p>}
             </div>
         </main>
         </>

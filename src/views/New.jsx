@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 import ControlButtons from "../components/molecules/ControlButtons/ControlButtons";
 
@@ -14,6 +15,8 @@ export default function () {
     const {loggedInUser} = useUser()
 
     const location = useLocation();
+
+    const { t } = useTranslation();
 
     let editId = false
     if (location.state?.id)
@@ -109,11 +112,11 @@ export default function () {
   const onSave = async () => {
 
     if (!newRoutine.name) {
-        setError('Bitte Namen eingeben');
+        setError(t("addName"));
         return;
     }
     if (!newRoutine.poses.length) {
-        setError('Bitte mindestens eine Pose hinzufügen eingeben');
+        setError(t("atLeastOnePose"));
         return;
     }
 
@@ -148,11 +151,11 @@ export default function () {
                             <textarea 
                                 className="pose-text-input" 
                                 name="text"
-                                placeholder="Text eingeben"
+                                placeholder={t("enterText")}
                                 value={pose.text} 
                                 onChange={(event) => handleControlChange(event, i)}
                             />
-                            <button className="remove-pose" onClick={() => handlePoseRemoval(i)}>Entfernen</button>
+                            <button className="remove-pose" onClick={() => handlePoseRemoval(i)}>{t("delete")}</button>
 
                         </div>
                     </div>
@@ -169,24 +172,24 @@ export default function () {
                         <img src={`poses/${pose.name}.svg`} alt={pose.name} />
                         <div className="pose-controls">
                         <ControlButtons
-                            label="Atmung"
+                            label={t("breathing")}
                             type="checkbox"
                             name="breath"
                             i={i}
                             handleChange={handleControlChange}
-                            first={{value:"Einamten", checked: pose.breath === "Einamten", label: "Ein"}}
-                            second={{value:"Ausatmen",checked: pose.breath === "Ausatmen",label: "Aus"}}
+                            first={{value:"Einamten", checked: pose.breath === "Einamten", label: t("in")}}
+                            second={{value:"Ausatmen",checked: pose.breath === "Ausatmen",label: t("out")}}
                         />
                         <ControlButtons
-                            label="Hilfsmittel"
+                            label={t("equipment")}
                             type="checkbox"
                             name="assistiveEquipment"
                             i={i}
                             handleChange={handleControlChange}
-                            first={{value:"Klotz", checked: pose.assistiveEquipment === 'Klotz',label: "Klotz"}}
-                            second={{value:"Gurt", checked: pose.assistiveEquipment === 'Gurt',label: "Gurt"}}
+                            first={{value:"Klotz", checked: pose.assistiveEquipment === 'Klotz',label: t("block")}}
+                            second={{value:"Gurt", checked: pose.assistiveEquipment === 'Gurt',label: t("strap")}}
                         />
-                        <button className="remove-pose" onClick={() => handlePoseRemoval(i)}>Entfernen</button>
+                        <button className="remove-pose" onClick={() => handlePoseRemoval(i)}>{t("delete")}</button>
                         </div>
                     </div>
                     </div>
@@ -195,7 +198,7 @@ export default function () {
     } else {
         poses = (
             <div onDrop={onDrop}>
-                <p>Keine Pose hinzugefügt. Ziehen Sie jetzt eine Pose hierher.</p>
+                <p>{t("noPoses")}</p>
             </div>
         )
     }
@@ -213,12 +216,12 @@ export default function () {
             <Button
                 type="secondary"
                 clickHandler={onSave}
-                text="Speichern"
+                text={t("save")}
             />
             <Button
                 type="light"
                 clickHandler={newTextField}
-                text="Textfeld hinzufügen"
+                text={t("addText")}
             />
         </div>
       </div>

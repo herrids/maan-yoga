@@ -1,6 +1,7 @@
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom"
 
-import { useEffect } from "react";
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../i18n';
 
 import { useUser } from "./context/UserContext";
 
@@ -18,8 +19,8 @@ function App() {
 
   const {loggedInUser} = useUser()
 
-
   return (
+    <I18nextProvider i18n={i18n}>
     <div className="App">
       <BrowserRouter>
         {loggedInUser && <Header />}
@@ -48,6 +49,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </div>
+    </I18nextProvider>
   )
 }
 

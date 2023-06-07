@@ -1,6 +1,7 @@
 import { useParams, Navigate, useNavigate, Link } from 'react-router-dom'
 import { ReactComponent as BackButton } from '../assets/back.svg';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useUser } from '../context/UserContext';
 import { getRoutine } from '../../firebase';
@@ -9,6 +10,8 @@ import Routine from '../components/Routine/Routine';
 
 export default function() {
     const [routine, setRoutine] = useState({})
+
+    const { t } = useTranslation();
 
     const { id } = useParams();
     const navigate = useNavigate();
@@ -40,11 +43,11 @@ export default function() {
                     state={{routine, id}}
                     >
                 <button>
-                    Bearbeiten
+                    {t("edit")}
                 </button>
                 </Link>
                 <button onClick={() => window.print()}>
-                    Drucken
+                    {t("print")}
                 </button>
                 </div>
             </div>

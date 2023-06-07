@@ -1,4 +1,6 @@
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
 import { auth } from '../../../firebase';
 
 import Button from '../atoms/Button/Button';
@@ -7,6 +9,10 @@ import './Header.scss';
 
 export default function Header() {
 
+    const { t, i18n } = useTranslation();
+
+    console.log(i18n.language)
+
     const handleLogout = async () => {
         try {
           await auth.signOut();
@@ -14,7 +20,12 @@ export default function Header() {
         } catch (error) {
           console.log('Error logging out:', error);
         }
-      };
+    };
+
+    const handleLanguageChange = () => {
+        const newLanguage = i18n.language.startsWith('de') ? 'en' : 'de';
+        i18n.changeLanguage(newLanguage);
+    };
 
     return (
         <header>
@@ -26,22 +37,27 @@ export default function Header() {
                 <ul>
                     <li>
                         <NavLink exact="true" to="/new" activeclassname="active">
-                            Neuer Flow
+                            {t("new")}
                         </NavLink>
                     </li>
                     <li>
                         <NavLink to="/flows" activeclassname="active">
-                            Meine Flows
+                            {t("list")}
                         </NavLink>
                     </li>
                 </ul>
                 </div>
             </nav>
-            <div className="logout">
+            <div className="controls">
+                <Button 
+                    clickHandler={handleLanguageChange}
+                    type="transparent"
+                    text={i18n.language.startsWith('de') ? "English" : "Deutsch"}
+                />
                 <Button 
                     clickHandler={handleLogout}
                     type="transparent"
-                    text="Logout"
+                    text={t("logout")}
                 />
             </div>
         </header>

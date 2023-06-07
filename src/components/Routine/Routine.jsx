@@ -1,8 +1,12 @@
 import "./Routine.scss"
 import { formatDate } from "../../util/dateFormat"
 
+import { useTranslation } from 'react-i18next';
+
 export default function (props) {
     const {name, date, poses} = props.routine
+
+    const { t } = useTranslation();
 
     return (
         <div className="yoga-routine">
@@ -22,7 +26,7 @@ export default function (props) {
                                 <p>{pose.breath} </p>
                                 {pose.assistiveEquipment && pose.assistiveEquipment.length ? (
                                     <>
-                                        <p>Hilfsmittel:</p>
+                                        <p>{t("equipment")}:</p>
                                         <p>{pose.assistiveEquipment}</p>
                                     </>
                                 ): null}
