@@ -7,9 +7,11 @@ import { useUser } from '../context/UserContext';
 import { getRoutine } from '../../firebase';
 
 import Routine from '../components/Routine/Routine';
+import Loader from "../components/Loader/Loader";
 
 export default function() {
     const [routine, setRoutine] = useState({})
+    const [loading, setLoading] = useState(true)
 
     const { t } = useTranslation();
 
@@ -21,6 +23,7 @@ export default function() {
         const fetchRoutine = async () => {
             const result = await getRoutine(id);
             setRoutine(result);
+            setLoading(false)
         };
         fetchRoutine();
     }, [id])
@@ -32,6 +35,8 @@ export default function() {
     }, [routine])
     return (
         <>
+            {loading === true ? <Loader show={loading} /> :
+            <>
             <div className="routine-controls">
                 <div className="back-button" onClick={() => navigate(-1)}>
                     <BackButton />
@@ -52,6 +57,7 @@ export default function() {
             <div id="print-content">
                 {<Routine routine={routine}/>}
             </div>
+            </>}
         </>
     )
 }

@@ -1,7 +1,9 @@
 import { createContext, useState, useContext, useEffect } from "react";
+import { useAuthState } from 'react-firebase-hooks/auth'
+
+import Loader from "../components/Loader/Loader";
 
 import { auth } from "../../firebase";
-import { useAuthState } from 'react-firebase-hooks/auth'
 
 export const Context = createContext()
 
@@ -29,7 +31,7 @@ export default function ContextProvider({children}) {
 
     const [loggedInUser, setLoggedInUser] = useState("")
     
-    const [user] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
 
     useEffect(() => {
         setLoggedInUser(user);
@@ -43,7 +45,7 @@ export default function ContextProvider({children}) {
                 setLoggedInUser
             }}
         >
-            {children}
+            {loading ? <Loader show={loading}/> : children}
         </Context.Provider>
     )
 }
