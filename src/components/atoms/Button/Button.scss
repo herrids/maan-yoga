@@ -4,7 +4,6 @@
     color: white;
     padding: 10px 20px;
     margin: 0px 10px;
-    float: right;
     cursor: pointer;
 
     &__primary {
@@ -43,4 +42,19 @@
           color: #000;
         }
       }
+    
+    &__pill {
+      margin: 0 5px;
+      border-radius: 20px;
+      color:#000;
+    }
+
+    &__active {
+      background-color: #FE907A;
+      color: #fff
+    }
+
+    &__right {
+      float: right;
+    }
   }

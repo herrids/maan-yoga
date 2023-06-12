@@ -214,12 +214,12 @@ export default function () {
         </div>
         <div className="button-container">
             <Button
-                type="secondary"
+                type={["secondary", "right"]}
                 clickHandler={onSave}
                 text={t("save")}
             />
             <Button
-                type="light"
+                type={["light", "right"]}
                 clickHandler={newTextField}
                 text={t("addText")}
             />
