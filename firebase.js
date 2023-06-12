@@ -9,9 +9,8 @@ import {
     getDoc,
     addDoc,
     updateDoc
-} from 'firebase/firestore';
+} from 'firebase/firestore/lite';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBNmfbrkAHBOexTGHx0fDk7wwoqNZYkQC0",
@@ -23,9 +22,8 @@ const firebaseConfig = {
   };
 
 export const app = initializeApp(firebaseConfig)
-export const auth = getAuth()
+export const auth = getAuth(app)
 export const db =  getFirestore();
-export const storage = getStorage(app);
 
 export function signIn (email, password) {
     return signInWithEmailAndPassword(auth, email, password)
