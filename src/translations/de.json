@@ -20,5 +20,13 @@
     "enterText": "Text eingeben",
     "atLeastOnePose": "Bitte mindestens eine Pose hinzufügen.",
     "addName": "Bitte Namen eingeben.",
-    "noFlow": "Noch keinen Flow erstellt"
+    "noFlow": "Noch keinen Flow erstellt",
+    "allPoses": "Alle",
+    "standingPoses": "Stehend",
+    "sittingPoses": "Sitzend",
+    "kneelingPoses": "Kniend",
+    "backPoses": "Rücken",
+    "bellyPoses": "Bauch",
+    "armPoses": "Armstütz",
+    "symbolPoses": "Symbole"
 }

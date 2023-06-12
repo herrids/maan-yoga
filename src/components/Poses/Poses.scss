@@ -1,3 +1,7 @@
+.filter-buttons {
+  margin-top: 30px;
+}
+
 .poses-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -5,10 +9,11 @@
     background-color: #fff;
     border-radius: 10px;
     padding: 20px;
-    margin-top: 50px
+    margin-top: 20px
   }
   
   .poses-grid img {
     width: 100%;
+    max-width: 125px;
     height: auto;
   }

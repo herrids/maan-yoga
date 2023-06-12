@@ -21,34 +21,34 @@ function App() {
 
   return (
     <I18nextProvider i18n={i18n}>
-    <div className="App">
-      <BrowserRouter>
-        {loggedInUser && <Header />}
-        <Routes>
-          <Route path="/" element={
-            loggedInUser ? <Navigate to="/flows"/> : <Navigate to="/login"/>
-          }/>
-          <Route path="/flows" element={
-            loggedInUser? <Main /> : <Navigate to="/login"/>
-          }/>
-          <Route path="/new" element={
-            loggedInUser? <New /> : <Navigate to="/login"/>
-          }/>
-          <Route path="/flows/:id" element={
-            loggedInUser? <Flow /> : <Navigate to="/flows"/>
-          }/>
-          <Route path="/flows/:id/edit" element={
-            loggedInUser? <New /> : <Navigate to="/flows"/>
-          }/>
-          <Route path="/login" element={
-            !loggedInUser? <Login /> : <Navigate to="/flows"/>
-          }/>
-          <Route path="*" element={
-            loggedInUser? <Error404 /> : <Navigate to="/login"/>
-          } />
-        </Routes>
-      </BrowserRouter>
-    </div>
+      <div className="App">
+        <BrowserRouter>
+          {loggedInUser && <Header />}
+          <Routes>
+            <Route path="/" element={
+              loggedInUser ? <Navigate to="/flows"/> : <Navigate to="/login"/>
+            }/>
+            <Route path="/flows" element={
+              loggedInUser? <Main /> : <Navigate to="/login"/>
+            }/>
+            <Route path="/new" element={
+              loggedInUser? <New /> : <Navigate to="/login"/>
+            }/>
+            <Route path="/flows/:id" element={
+              loggedInUser? <Flow /> : <Navigate to="/flows"/>
+            }/>
+            <Route path="/flows/:id/edit" element={
+              loggedInUser? <New /> : <Navigate to="/flows"/>
+            }/>
+            <Route path="/login" element={
+              !loggedInUser? <Login /> : <Navigate to="/flows"/>
+            }/>
+            <Route path="*" element={
+              loggedInUser? <Error404 /> : <Navigate to="/login"/>
+            } />
+          </Routes>
+        </BrowserRouter>
+      </div>
     </I18nextProvider>
   )
 }
