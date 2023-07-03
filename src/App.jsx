@@ -10,7 +10,7 @@ import Header from "./components/Header/Header";
 import Main from './views/Main'
 import New from './views/New'
 import Error404 from './views/Error404'
-import Login from './views/Login'
+import Login from './views/Login/Login'
 import Flow from './views/Flow'
 
 import './App.scss'
@@ -42,6 +42,9 @@ function App() {
             }/>
             <Route path="/login" element={
               !loggedInUser? <Login /> : <Navigate to="/flows"/>
+            }/>
+            <Route path="/register" element={
+              !loggedInUser ? <Login register={true}/> : <Navigate to="/flows"/>
             }/>
             <Route path="*" element={
               loggedInUser? <Error404 /> : <Navigate to="/login"/>

@@ -28,5 +28,12 @@
     "backPoses": "Back",
     "bellyPoses": "Belly",
     "armPoses": "Arms",
-    "symbolPoses": "Symbols"
+    "symbolPoses": "Symbols",
+    "noAccount": "No Account?",
+    "registerNow": "Register now",
+    "yesAccount": "Already registered?",
+    "signUpNow": "Login",
+    "createAccount": "Create Account",
+    "registerError": "Register not successfull",
+    "continueGoogle": "Continue with Google"
 }

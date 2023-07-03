@@ -21,7 +21,11 @@ export default function (props) {
                         </>
                     ) : (
                         <>
-                            <img src={`/poses/${pose.name}.svg`} alt={pose.name} />
+                            <img 
+                                src={`/poses/${pose.name}.svg`} 
+                                alt={pose.name}
+                                onLoad={handleImageLoad}
+                            />
                             <div className="yoga-routine__poses__pose-details">
                                 <p>{pose.breath} </p>
                                 {pose.assistiveEquipment && pose.assistiveEquipment.length ? (

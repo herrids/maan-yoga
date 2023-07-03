@@ -1,0 +1,11 @@
+.redirect-link {
+    margin-top: 30px;
+  
+  &__link {
+    color: #fff;
+  
+    &:hover {
+      color: #000;
+    }
+  }
+}

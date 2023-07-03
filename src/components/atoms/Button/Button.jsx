@@ -20,7 +20,14 @@ export default function(props) {
             className={classNames.join(' ')} 
             onClick={props.clickHandler}
         >
-            {props.text}
+            {props.image && 
+                <img 
+                    src={props.image.src} 
+                    alt={props.image.alt || ""} 
+                    className="button__image" 
+                />
+            }
+            <span>{props.text}</span>
         </button>
     )
 }

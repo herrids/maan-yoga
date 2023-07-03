@@ -1,4 +1,8 @@
 .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
     border: none;
     border-radius: 5px;
     color: white;
@@ -56,5 +60,24 @@
 
     &__right {
       float: right;
+    }
+
+    &__ghost {
+      background-color: transparent;
+      color:#000;
+      border: 1px solid #d3d3d3;
+
+      &:hover, &:focus  {
+        border-color: #000
+      }
+    }
+
+    &__full-width {
+      width: 100%;
+      margin: 0;
+    }
+
+    &__image {
+      height: 20px
     }
   }

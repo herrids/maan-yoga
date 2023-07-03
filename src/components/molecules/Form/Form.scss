@@ -1,4 +1,4 @@
-.login-container {
+.form-container {
     background-color: white;
     border-radius: 10px;
     border: 1px solid #ccc;
@@ -21,4 +21,9 @@
         clear: both;
       }
 }
-  
+
+.form-extras-container {
+  border-top: 1px solid #e3e3e3;
+  margin-top: 15px;
+  padding-top: 30px;
+}

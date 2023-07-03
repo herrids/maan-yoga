@@ -10,7 +10,13 @@ import {
     addDoc,
     updateDoc
 } from 'firebase/firestore/lite';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { 
+    getAuth, 
+    signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword ,
+    GoogleAuthProvider,
+    signInWithRedirect
+} from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBNmfbrkAHBOexTGHx0fDk7wwoqNZYkQC0",
@@ -27,6 +33,27 @@ export const db =  getFirestore();
 
 export function signIn (email, password) {
     return signInWithEmailAndPassword(auth, email, password)
+}
+
+export function register (email, name, password) {
+
+    try {
+        return createUserWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export function googleSSO () {
+    const provider = new GoogleAuthProvider();
+
+    signInWithRedirect(auth, provider)
+    /*     .then((result) => {
+            console.log(result.userEmail)
+        }).catch(error => {
+            console.log(error)
+    }) */
+
 }
 
 export function getUserRoutines (userEmail) {
