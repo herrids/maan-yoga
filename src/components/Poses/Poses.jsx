@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from 'react-i18next';
+import { useDrag } from 'react-dnd';
 
 import Button from "../atoms/Button/Button";
 import "./Poses.scss"
@@ -11,10 +12,6 @@ export default function() {
     const { t } = useTranslation();
 
     const [selectedCategory, setSelectedCategory] = useState(null);
-
-    const onDragStart = (event, name) => {
-      event.dataTransfer.setData("name", name);
-    };
 
     const filterImages = () => {
       if (!selectedCategory) {
@@ -40,14 +37,20 @@ export default function() {
           <Button type="pill" active={selectedCategory === "7"} clickHandler={() => setSelectedCategory("7")} text={t("symbolPoses")}/>
         </div>
         <div className="poses-grid">
-          {filterImages().map((key, i) => (
-            <img
-              key={i}
-              src={`poses/${key}.svg`}
-              draggable
-              onDragStart={(event) => onDragStart(event, key)}
-            />
-          ))}
+          {filterImages().map((key, i) => {
+            const [, ref] = useDrag({
+              type: 'POSE_IMAGE',
+              item: { id: key },
+            });
+
+            return (
+              <img
+                key={i}
+                ref={ref}
+                src={`poses/${key}.svg`}
+              />
+            );
+          })}
         </div>
       </>
     );
