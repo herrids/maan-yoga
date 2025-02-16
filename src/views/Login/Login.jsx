@@ -9,8 +9,7 @@ export default function({register}) {
             <div className="login-logo">
                 <img src="logo.png" alt="Your Logo" />
             </div>
-            {register ? <RegisterForm/> :
-            <LoginForm /> }
+            <LoginForm />
         </>
     )
 }

@@ -14,7 +14,7 @@ export default function () {
     const [error, setError] = useState(null);
 
     const { t } = useTranslation();
-    const { loginWithPopup } = useAuth0();
+    const { loginWithRedirect } = useAuth0();
 
     const textfields = [
       {
@@ -46,7 +46,7 @@ export default function () {
     }
 
     const signInWithGoogle = () => {
-        loginWithPopup({
+        login({
             connection: 'google-oauth2'
         });
     }
@@ -54,22 +54,10 @@ export default function () {
     return (
         <>
             {error && <div className="login-error">{error}</div>}
-            <Form 
-                headline={"Login"}
-                textfields={textfields}
-                button={button}
-            >
-                <Button
-                    type={["ghost", "full-width"]}
-                    clickHandler={signInWithGoogle}
-                    text={t("continueGoogle")}
-                    image={{src: "google_logo.svg"}}
-                />
-            </Form>
-            <AuthRedirectLink 
-                text={t("noAccount")}
-                linkDestination={"/register"}
-                linkText={t("registerNow")}
+            <Button
+                type={["center", "secondary"]}
+                clickHandler={loginWithRedirect}
+                text={"Login"}
             />
         </>
     )
