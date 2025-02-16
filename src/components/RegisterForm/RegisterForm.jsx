@@ -1,15 +1,15 @@
 import { useState } from "react"
 import { useTranslation } from 'react-i18next';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import Form from "../molecules/Form/Form"
 import AuthRedirectLink from "../AuthRedirectLink/AuthRedirectLink";
 import Button from "../atoms/Button/Button";
 
-import { register, googleSSO } from "../../../firebase"
-
 export default function(props) {
 
     const { t } = useTranslation();
+    const { loginWithPopup, loginWithRedirect } = useAuth0();
 
     const [email, setEmail] = useState("")
     const [name, setName] = useState("")
@@ -37,12 +37,14 @@ export default function(props) {
 
     const clickHandler = async (e) => {
         e.preventDefault();
-
         try {
-            await register(email, name, password);
-          } catch (error) {
+            await loginWithPopup({
+                screen_hint: 'signup',
+                login_hint: email
+            });
+        } catch (error) {
             setError(t("registerError"));
-          }
+        }
     }
 
     const button = {
@@ -51,11 +53,16 @@ export default function(props) {
         clickHandler
     }
 
-    const signInWithGoogle = () => {}
+    const signInWithGoogle = () => {
+        loginWithPopup({
+            connection: 'google-oauth2'
+        });
+    }
     
     return (
         <>
             {error && <div className="error">{error}</div>}
+            <button onClick={() => loginWithRedirect()}>Log In</button>
             <Form 
                 headline={"Register"}
                 textfields={textfields}
@@ -63,7 +70,7 @@ export default function(props) {
             >
                 <Button
                 type={["ghost", "full-width"]}
-                clickHandler={googleSSO}
+                clickHandler={signInWithGoogle}
                 text={t("continueGoogle")}
                 image={{src: "google_logo.svg"}}
                 />

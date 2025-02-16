@@ -13,7 +13,7 @@ export default function() {
     const [selectedCategory, setSelectedCategory] = useState(null);
 
     const onDragStart = (event, name) => {
-      event.dataTransfer.setData("name", name);
+      event.dataTransfer.setData("pose_id", name);
     };
 
     const filterImages = () => {

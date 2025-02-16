@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
-import { auth } from '../../../firebase';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import Button from '../atoms/Button/Button';
 
@@ -10,14 +9,14 @@ import './Header.scss';
 export default function Header() {
 
     const { t, i18n } = useTranslation();
+    const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
 
-    const handleLogout = async () => {
-        try {
-          await auth.signOut();
-          console.log('User logged out successfully');
-        } catch (error) {
-          console.log('Error logging out:', error);
-        }
+    const handleLogin = () => {
+        loginWithRedirect();
+    };
+
+    const handleLogout = () => {
+        logout({ returnTo: window.location.origin });
     };
 
     const handleLanguageChange = () => {
@@ -52,11 +51,21 @@ export default function Header() {
                     type="transparent"
                     text={i18n.language.startsWith('de') ? "English" : "Deutsch"}
                 />
-                <Button 
-                    clickHandler={handleLogout}
-                    type="transparent"
-                    text={t("logout")}
-                />
+                {isAuthenticated ? (
+                    <>
+                        <Button 
+                            clickHandler={handleLogout}
+                            type="transparent"
+                            text={t("logout")}
+                        />
+                    </>
+                ) : (
+                    <Button 
+                        clickHandler={handleLogin}
+                        type="transparent"
+                        text={t("login")}
+                    />
+                )}
             </div>
         </header>
     );

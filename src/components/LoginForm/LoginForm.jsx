@@ -1,6 +1,6 @@
-import { signIn, googleSSO } from "../../../firebase"
 import { useState } from "react";
 import { useTranslation } from 'react-i18next';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import Form from "../molecules/Form/Form"
 import AuthRedirectLink from "../AuthRedirectLink/AuthRedirectLink";
@@ -14,6 +14,7 @@ export default function () {
     const [error, setError] = useState(null);
 
     const { t } = useTranslation();
+    const { loginWithPopup } = useAuth0();
 
     const textfields = [
       {
@@ -27,46 +28,49 @@ export default function () {
           changeHandler: setPassword,
           type: "password"
       }
-  ]
+    ]
 
-  const clickHandler = async (e) => {
-    try {
-      await signIn(email, password);
-    } catch (error) {
-      setError(t("loginError"));
+    const clickHandler = async (e) => {
+        e.preventDefault();
+        try {
+            await loginWithPopup();
+        } catch (error) {
+            setError(t("loginError"));
+        }
+    };
+
+    const button = {
+        text: t("loginButton"),
+        type: "primary",
+        clickHandler
     }
-  };
 
-  const button = {
-    text: t("loginButton"),
-    type: "primary",
-    clickHandler
-  }
+    const signInWithGoogle = () => {
+        loginWithPopup({
+            connection: 'google-oauth2'
+        });
+    }
 
-  const signInWithGoogle = () => {
-    console.log("gooogooo")
-  }
-
-  return (
-      <>
-        {error && <div className="login-error">{error}</div>}
-        <Form 
-          headline={"Login"}
-          textfields={textfields}
-          button={button}
-        >
-          <Button
-            type={["ghost", "full-width"]}
-            clickHandler={googleSSO}
-            text={t("continueGoogle")}
-            image={{src: "google_logo.svg"}}
-          />
-        </Form>
-        <AuthRedirectLink 
-          text={t("noAccount")}
-          linkDestination={"/register"}
-          linkText={t("registerNow")}
-        />
-      </>
+    return (
+        <>
+            {error && <div className="login-error">{error}</div>}
+            <Form 
+                headline={"Login"}
+                textfields={textfields}
+                button={button}
+            >
+                <Button
+                    type={["ghost", "full-width"]}
+                    clickHandler={signInWithGoogle}
+                    text={t("continueGoogle")}
+                    image={{src: "google_logo.svg"}}
+                />
+            </Form>
+            <AuthRedirectLink 
+                text={t("noAccount")}
+                linkDestination={"/register"}
+                linkText={t("registerNow")}
+            />
+        </>
     )
-  }
+}

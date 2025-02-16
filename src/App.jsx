@@ -3,7 +3,7 @@ import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom"
 import { I18nextProvider } from 'react-i18next';
 import i18n from '../i18n';
 
-import { useUser } from "./context/UserContext";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import Header from "./components/Header/Header";
 
@@ -16,38 +16,37 @@ import Flow from './views/Flow'
 import './App.scss'
 
 function App() {
-
-  const {loggedInUser} = useUser()
+  const { isAuthenticated, user } = useAuth0();
 
   return (
     <I18nextProvider i18n={i18n}>
       <div className="App">
         <BrowserRouter>
-          {loggedInUser && <Header />}
+          {isAuthenticated && <Header />}
           <Routes>
             <Route path="/" element={
-              loggedInUser ? <Navigate to="/flows"/> : <Navigate to="/login"/>
+              isAuthenticated ? <Navigate to="/flows"/> : <Navigate to="/login"/>
             }/>
             <Route path="/flows" element={
-              loggedInUser? <Main /> : <Navigate to="/login"/>
+              isAuthenticated? <Main /> : <Navigate to="/login"/>
             }/>
             <Route path="/new" element={
-              loggedInUser? <New /> : <Navigate to="/login"/>
+              isAuthenticated? <New /> : <Navigate to="/login"/>
             }/>
             <Route path="/flows/:id" element={
-              loggedInUser? <Flow /> : <Navigate to="/flows"/>
+              isAuthenticated? <Flow /> : <Navigate to="/flows"/>
             }/>
             <Route path="/flows/:id/edit" element={
-              loggedInUser? <New /> : <Navigate to="/flows"/>
+              isAuthenticated? <New /> : <Navigate to="/flows"/>
             }/>
             <Route path="/login" element={
-              !loggedInUser? <Login /> : <Navigate to="/flows"/>
+              !isAuthenticated? <Login /> : <Navigate to="/flows"/>
             }/>
             <Route path="/register" element={
-              !loggedInUser ? <Login register={true}/> : <Navigate to="/flows"/>
+              !isAuthenticated ? <Login register={true}/> : <Navigate to="/flows"/>
             }/>
             <Route path="*" element={
-              loggedInUser? <Error404 /> : <Navigate to="/login"/>
+              isAuthenticated? <Error404 /> : <Navigate to="/login"/>
             } />
           </Routes>
         </BrowserRouter>

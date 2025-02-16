@@ -7,18 +7,19 @@ import ControlButtons from "../components/molecules/ControlButtons/ControlButton
 import Poses from "../components/Poses/Poses";
 import Button from "../components/atoms/Button/Button";
 
-import { useUser } from "../context/UserContext";
-import { saveRoutine } from "../../firebase";
+import { saveRoutine } from "../services/supabaseService";
+
+import { useAuth0 } from '@auth0/auth0-react';
 
 export default function () {
 
-    const {loggedInUser} = useUser()
+    const {user} = useAuth0();
 
     const location = useLocation();
 
     const { t } = useTranslation();
 
-    let editId = false
+    let editId
     if (location.state?.id)
         editId = location.state.id
 
@@ -33,10 +34,10 @@ export default function () {
 
   const onDrop = (event, newIndex) => {
     event.preventDefault();
-    const name = event.dataTransfer.getData("name");
+    const pose_id = event.dataTransfer.getData("pose_id");
     const index = event.dataTransfer.getData("index");
   
-    if (!name) {
+    if (!pose_id) {
       return;
     }
   
@@ -50,19 +51,19 @@ export default function () {
       newPoseArray.splice(newIndex, 0, {
         ...poseToUpdate,
         breath: poseToUpdate.breath || "",
-        assistiveEquipment: poseToUpdate.assistiveEquipment || []
+        equipment: poseToUpdate.equipment || ""
       });
     } else {
       // Insert new pose at new index or append to end
       newPoseArray = [...newRoutine.poses];
       if (newIndex && newIndex !== newPoseArray.length) {
         newPoseArray.splice(newIndex, 0, {
-          name: name,
+          pose_id: pose_id,
           breath: "",
-          assistiveEquipment: []
+          equipment: ""
         });
       } else {
-        newPoseArray.push({ name: name, breath: "", assistiveEquipment: [] });
+        newPoseArray.push({ pose_id: pose_id, breath: "", equipment: "" });
       }
     }
   
@@ -77,7 +78,7 @@ export default function () {
 
   const onDragStart = (event, pose, index) => {
     event.dataTransfer.setData("index", index);
-    event.dataTransfer.setData("name", pose);
+    event.dataTransfer.setData("pose_id", pose);
   };
 
   const onNameChange = (event) => {
@@ -110,7 +111,6 @@ export default function () {
   };
 
   const onSave = async () => {
-
     if (!newRoutine.name) {
         setError(t("addName"));
         return;
@@ -120,9 +120,12 @@ export default function () {
         return;
     }
 
-    const routineToSave = {userEmail: loggedInUser.email, date: new Date(Date.now()),...newRoutine}
+    const routineToSave = {
+      user_email: user.email,
+      id: editId,
+      ...newRoutine}
 
-    const id = await saveRoutine(routineToSave, editId)
+    const id = await saveRoutine(routineToSave)
 
     navigate(`/flows/${id}`)
   };
@@ -145,7 +148,7 @@ export default function () {
                         <div
                             className="pose-text"
                             draggable
-                            onDragStart={(event) => onDragStart(event, pose.name, i)}
+                            onDragStart={(event) => onDragStart(event, pose.pose_id, i)}
                             onDrop={(event) => onDrop(event, i)}
                         >
                             <textarea 
@@ -169,7 +172,7 @@ export default function () {
                         onDragStart={(event) => onDragStart(event, pose.name, i)} 
                         onDrop={(event) => onDrop(event, i)}
                     >
-                        <img src={`poses/${pose.name}.svg`} alt={pose.name} />
+                        <img src={`poses/${pose.pose_id}.svg`} alt={pose.pose_id} />
                         <div className="pose-controls">
                         <ControlButtons
                             label={t("breathing")}
@@ -183,11 +186,11 @@ export default function () {
                         <ControlButtons
                             label={t("equipment")}
                             type="checkbox"
-                            name="assistiveEquipment"
+                            name="equipment"
                             i={i}
                             handleChange={handleControlChange}
-                            first={{value:"Klotz", checked: pose.assistiveEquipment === 'Klotz',label: t("block")}}
-                            second={{value:"Gurt", checked: pose.assistiveEquipment === 'Gurt',label: t("strap")}}
+                            first={{value:"Klotz", checked: pose.equipment === 'Klotz',label: t("block")}}
+                            second={{value:"Gurt", checked: pose.equipment === 'Gurt',label: t("strap")}}
                         />
                         <button className="remove-pose" onClick={() => handlePoseRemoval(i)}>{t("delete")}</button>
                         </div>
