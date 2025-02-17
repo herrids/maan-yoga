@@ -35,5 +35,9 @@
     "signUpNow": "Login",
     "createAccount": "Create Account",
     "registerError": "Register not successfull",
-    "continueGoogle": "Continue with Google"
+    "continueGoogle": "Continue with Google",
+    "hideFilters": "Hide Filters",
+    "showFilters": "Show Filters",
+    "searchPoses": "Search poses...",
+    "noPosesFound": "No poses found"
 }

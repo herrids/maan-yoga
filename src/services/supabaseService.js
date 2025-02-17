@@ -146,4 +146,26 @@ export const saveRoutine = async (data) => {
     console.error('Fehler beim Speichern der Routine:', error.message);
     throw error;
   }
+};
+
+/**
+ * Lädt alle Posen aus der Datenbank
+ * @returns {Promise<Array>} Array von Posen
+ */
+export const getAllPoses = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('poses')
+      .select('*')
+      .order('id');
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Fehler beim Laden der Posen:', error.message);
+    throw error;
+  }
 }; 

@@ -18,8 +18,6 @@ import './App.scss'
 function App() {
   const { isAuthenticated, user, error } = useAuth0();
 
-  console.log(user)
-  
   return (
     <I18nextProvider i18n={i18n}>
       <div className="App">

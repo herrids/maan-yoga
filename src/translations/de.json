@@ -35,5 +35,9 @@
     "signUpNow": "Anmelden",
     "createAccount": "Konto erstellen",
     "registerError": "Registrierung nicht erfolgreich",
-    "continueGoogle": "Mit Google fortfahren"
+    "continueGoogle": "Mit Google fortfahren",
+    "hideFilters": "Filter ausblenden",
+    "showFilters": "Filter anzeigen",
+    "searchPoses": "Suche nach Posen...",
+    "noPosesFound": "Keine Posen gefunden"
 }

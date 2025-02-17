@@ -1,6 +1,15 @@
 .filter-buttons {
   display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
   margin-top: 30px;
+  gap: 10px;
 }
 
 .poses-grid {
@@ -18,3 +27,46 @@
     max-width: 125px;
     height: auto;
   }
+
+  .pose-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    img {
+      width: 100%;
+      max-width: 125px;
+      height: auto;
+    }
+
+    .pose-name {
+      font-size: 0.9rem;
+      text-align: center;
+    }
+  }
+
+.search-container {
+  width: 100%;
+  max-width: 300px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 1rem;
+  
+  &:focus {
+    outline: none;
+    border-color: #666;
+  }
+}
+
+.no-poses-message {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
