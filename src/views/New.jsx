@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 
@@ -7,7 +7,7 @@ import ControlButtons from "../components/molecules/ControlButtons/ControlButton
 import Poses from "../components/Poses/Poses";
 import Button from "../components/atoms/Button/Button";
 
-import { saveRoutine } from "../services/supabaseService";
+import { saveRoutine, getUserRoutines } from "../services/supabaseService";
 
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -25,8 +25,20 @@ export default function () {
 
   const [newRoutine, setNewRoutine] = useState(location.state?.routine || { name: "", poses: [] });
   const [error, setError] = useState('');
+  const [placeholder, setPlaceholder] = useState("");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const setDefaultPlaceholder = async () => {
+      if (!location.state?.routine) {
+        const routines = await getUserRoutines(user.email);
+        const nextNumber = routines.length + 1;
+        setPlaceholder(`Flow No. ${nextNumber}`);
+      }
+    };
+    setDefaultPlaceholder();
+  }, []);
 
   const onDragOver = (event) => {
     event.preventDefault();
@@ -113,22 +125,25 @@ export default function () {
   };
 
   const onSave = async () => {
-    if (!newRoutine.name) {
-        setError(t("addName"));
-        return;
+    let routineToSave = { ...newRoutine };
+    
+    if (!routineToSave.name) {
+        routineToSave.name = placeholder;
     }
-    if (!newRoutine.poses.length) {
+    
+    if (!routineToSave.poses.length) {
         setError(t("atLeastOnePose"));
         return;
     }
 
-    const routineToSave = {
+    routineToSave = {
       user_email: user.email,
       id: editId,
-      ...newRoutine}
-    const id = await saveRoutine(routineToSave)
-
-    navigate(`/flows/${id}`)
+      ...routineToSave
+    }
+    
+    const id = await saveRoutine(routineToSave);
+    navigate(`/flows/${id}`);
   };
 
   const newTextField = () => {
@@ -207,12 +222,16 @@ export default function () {
         )
     }
   
-  console.log(newRoutine)
   return (
     <main className="new-routine">
       <div className="routine-container">
         <label className="routine-input-label">Flow Name</label>
-        <input type="text" onChange={onNameChange} value={newRoutine.name} />
+        <input 
+            type="text" 
+            onChange={onNameChange} 
+            value={newRoutine.name}
+            placeholder={placeholder} 
+        />
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <div className="picture-dropzone" onDragOver={onDragOver} onDrop={onDrop}>
             {poses}
