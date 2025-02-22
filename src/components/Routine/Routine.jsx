@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 
 export default function (props) {
     const {name, created_at, poses} = props.routine
-    const { t } = useTranslation();
-    
+    const { t, i18n } = useTranslation();
+    console.log(poses)
     return (
         <div className="yoga-routine">
             <h2 className="yoga-routine__name">{name}</h2>
@@ -25,6 +25,7 @@ export default function (props) {
                                 /* onLoad={handleImageLoad} */
                             />
                             <div className="yoga-routine__poses__pose-details">
+                                <p className="yoga-routine__poses__pose-name">{i18n.language === 'de' ? pose.name_german : pose.name_english}</p>
                                 <p>{pose.breath} </p>
                                 {pose.equipment && pose.equipment.length ? (
                                     <>

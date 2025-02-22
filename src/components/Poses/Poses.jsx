@@ -16,7 +16,6 @@ export default function() {
       const fetchPoses = async () => {
         try {
           const posesData = await getAllPoses();
-          console.log(posesData);
           setPoses(posesData);
         } catch (error) {
           console.error('Fehler beim Laden der Posen:', error);

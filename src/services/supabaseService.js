@@ -42,7 +42,14 @@ export const getRoutine = async (routineId) => {
 
     const { data: posesData, error: posesError } = await supabase
       .from('routine_poses')
-      .select('*')
+      .select(`
+        *,
+        poses (
+          name_english,
+          name_german,
+          name_sanskrit
+        )
+      `)
       .eq('routine_id', routineId)
       .order('position');
 
@@ -50,9 +57,17 @@ export const getRoutine = async (routineId) => {
       throw posesError;
     }
 
+    // Map the poses data to include the pose information directly
+    const posesWithInfo = posesData.map(pose => ({
+      ...pose,
+      name_english: pose.poses?.name_english,
+      name_german: pose.poses?.name_german,
+      name_sanskrit: pose.poses?.name_sanskrit
+    }));
+
     return {
       ...routineData,
-      poses: posesData
+      poses: posesWithInfo
     };
   } catch (error) {
     console.error('Fehler beim Laden der Routine:', error.message);
@@ -92,12 +107,13 @@ export const saveRoutine = async (data) => {
       if (deleteError) {
         throw deleteError;
       }
-      console.log(poses)
       // Insert new poses
       const posesWithRoutineId = poses.map((pose, index) => ({
         pose_id: pose.pose_id,
         breath: pose.breath,
         equipment: pose.equipment,
+        type: pose.type,
+        text: pose.text,
         routine_id: routineData.id,
         position: index
       }));
@@ -114,7 +130,6 @@ export const saveRoutine = async (data) => {
 
     } else {
       // Insert new routine
-      console.log(routine)
       const { data: routineData, error: routineError } = await supabase
         .from('routines')
         .insert(routine)

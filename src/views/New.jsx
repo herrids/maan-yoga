@@ -51,7 +51,8 @@ export default function () {
       newPoseArray.splice(newIndex, 0, {
         ...poseToUpdate,
         breath: poseToUpdate.breath || "",
-        equipment: poseToUpdate.equipment || ""
+        equipment: poseToUpdate.equipment || "",
+        type: poseToUpdate.type || "pose"
       });
     } else {
       // Insert new pose at new index or append to end
@@ -60,10 +61,11 @@ export default function () {
         newPoseArray.splice(newIndex, 0, {
           pose_id: pose_id,
           breath: "",
-          equipment: ""
+          equipment: "",
+          type: "pose"
         });
       } else {
-        newPoseArray.push({ pose_id: pose_id, breath: "", equipment: "" });
+        newPoseArray.push({ pose_id: pose_id, breath: "", equipment: "", type: "pose" });
       }
     }
   
@@ -124,7 +126,6 @@ export default function () {
       user_email: user.email,
       id: editId,
       ...newRoutine}
-
     const id = await saveRoutine(routineToSave)
 
     navigate(`/flows/${id}`)
@@ -205,7 +206,8 @@ export default function () {
             </div>
         )
     }
-
+  
+  console.log(newRoutine)
   return (
     <main className="new-routine">
       <div className="routine-container">
