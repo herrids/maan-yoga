@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import Button from '../atoms/Button/Button';
+import Logo from '../molecules/Logo/Logo';
 
 import './Header.scss';
 
@@ -26,9 +27,7 @@ export default function Header() {
 
     return (
         <header>
-            <div className="logo">
-                <img src="logo.png" alt="Your Logo" />
-            </div>
+            <Logo />
             <nav>
                 <div className="nav-container">
                 <ul>
