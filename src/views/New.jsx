@@ -7,7 +7,7 @@ import ControlButtons from "../components/molecules/ControlButtons/ControlButton
 import Poses from "../components/Poses/Poses";
 import Button from "../components/atoms/Button/Button";
 
-import { saveRoutine, getUserRoutines } from "../services/supabaseService";
+import { saveFlow, getUserFlows } from "../services/supabaseService";
 
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -23,7 +23,7 @@ export default function () {
     if (location.state?.id)
         editId = location.state.id
 
-  const [newRoutine, setNewRoutine] = useState(location.state?.routine || { name: "", poses: [] });
+  const [newFlow, setNewFlow] = useState(location.state?.flow || { name: "", poses: [] });
   const [error, setError] = useState('');
   const [placeholder, setPlaceholder] = useState("");
 
@@ -31,9 +31,9 @@ export default function () {
 
   useEffect(() => {
     const setDefaultPlaceholder = async () => {
-      if (!location.state?.routine) {
-        const routines = await getUserRoutines(user.email);
-        const nextNumber = routines.length + 1;
+      if (!location.state?.flow) {
+        const flows = await getUserFlows(user.email);
+        const nextNumber = flows.length + 1;
         setPlaceholder(`Flow No. ${nextNumber}`);
       }
     };
@@ -57,7 +57,7 @@ export default function () {
   
     if (index !== "") {
       // Reorder existing pose to new index
-      newPoseArray = [...newRoutine.poses];
+      newPoseArray = [...newFlow.poses];
       const poseToUpdate = newPoseArray[index];
       newPoseArray.splice(index, 1);
       newPoseArray.splice(newIndex, 0, {
@@ -68,7 +68,7 @@ export default function () {
       });
     } else {
       // Insert new pose at new index or append to end
-      newPoseArray = [...newRoutine.poses];
+      newPoseArray = [...newFlow.poses];
       if (newIndex && newIndex !== newPoseArray.length) {
         newPoseArray.splice(newIndex, 0, {
           pose_id: pose_id,
@@ -81,8 +81,8 @@ export default function () {
       }
     }
   
-    setNewRoutine((prevRoutine) => ({
-      ...prevRoutine,
+    setNewFlow((prevFlow) => ({
+      ...prevFlow,
       poses: newPoseArray,
     }));
   
@@ -96,68 +96,68 @@ export default function () {
   };
 
   const onNameChange = (event) => {
-    setNewRoutine((prevRoutine) => ({
-      ...prevRoutine,
+    setNewFlow((prevFlow) => ({
+      ...prevFlow,
       name: event.target.value,
     }));
   };
 
   const handleControlChange = (event, index) => {
-    const newPoseArray = [...newRoutine.poses];
+    const newPoseArray = [...newFlow.poses];
     let newValue = null
     if (event.target.checked == true || event.target.type != "checkbox")
       newValue = event.target.value
     
     newPoseArray[index][event.target.name] = newValue 
-    setNewRoutine((prevRoutine) => ({ 
-        ...prevRoutine,
+    setNewFlow((prevFlow) => ({ 
+        ...prevFlow,
         poses: newPoseArray,
     }));
   }
 
   const handlePoseRemoval = (index) => {
-    const newPoseArray = [...newRoutine.poses];
+    const newPoseArray = [...newFlow.poses];
     newPoseArray.splice(index, 1);
-    setNewRoutine((prevRoutine) => ({
-      ...prevRoutine,
+    setNewFlow((prevFlow) => ({
+      ...prevFlow,
       poses: newPoseArray,
     }));
   };
 
   const onSave = async () => {
-    let routineToSave = { ...newRoutine };
+    let flowToSave = { ...newFlow };
     
-    if (!routineToSave.name) {
-        routineToSave.name = placeholder;
+    if (!flowToSave.name) {
+        flowToSave.name = placeholder;
     }
     
-    if (!routineToSave.poses.length) {
+    if (!flowToSave.poses.length) {
         setError(t("atLeastOnePose"));
         return;
     }
 
-    routineToSave = {
+    flowToSave = {
       user_email: user.email,
       id: editId,
-      ...routineToSave
+      ...flowToSave
     }
     
-    const id = await saveRoutine(routineToSave);
+    const id = await saveFlow(flowToSave);
     navigate(`/flows/${id}`);
   };
 
   const newTextField = () => {
-    const newPoseArray = [...newRoutine.poses];
+    const newPoseArray = [...newFlow.poses];
     newPoseArray.push({type: "text", text: ""})
-    setNewRoutine((prevRoutine) => ({ 
-        ...prevRoutine,
+    setNewFlow((prevFlow) => ({ 
+        ...prevFlow,
         poses: newPoseArray,
     }));
   }
 
     let poses = []
-    if(newRoutine.poses.length) {
-        poses = newRoutine.poses.map((pose, i) => {
+    if(newFlow.poses.length) {
+        poses = newFlow.poses.map((pose, i) => {
             if (pose.type == "text")
                 return (
                     <div key={i} className="pose-wrapper">
@@ -223,13 +223,13 @@ export default function () {
     }
   
   return (
-    <main className="new-routine">
-      <div className="routine-container">
-        <label className="routine-input-label">Flow Name</label>
+    <main className="new-flow">
+      <div className="flow-container">
+        <label className="flow-input-label">Flow Name</label>
         <input 
             type="text" 
             onChange={onNameChange} 
-            value={newRoutine.name}
+            value={newFlow.name}
             placeholder={placeholder} 
         />
         {error && <p style={{ color: 'red' }}>{error}</p>}

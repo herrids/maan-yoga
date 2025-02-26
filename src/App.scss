@@ -5,7 +5,7 @@
   text-align: center;
 }
 
-.routine-overview {
+.flow-overview {
   display: grid;
   grid-template-columns: repeat(auto-fit, 265px);
   gap: 16px;
@@ -13,7 +13,7 @@
   margin-top: 80px;
 }
 
-.routine-controls {
+.flow-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -70,14 +70,14 @@ button {
   }
 }
 
-.new-routine {
+.new-flow {
   
-  .routine-container {
+  .flow-container {
     background-color: #fff;
     border-radius: 10px;
     padding: 20px;
 
-    .routine-input-label {
+    .flow-input-label {
       display: block;
       margin-bottom: 10px;
       font-weight: 400;

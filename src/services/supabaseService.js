@@ -1,14 +1,14 @@
 import { supabase } from '../config/supabaseConfig';
 
 /**
- * Lädt alle Routinen für einen bestimmten Benutzer
+ * Lädt alle Flown für einen bestimmten Benutzer
  * @param {string} userEmail - E-Mail-Adresse des Benutzers
- * @returns {Promise<Array>} Array von Routinen
+ * @returns {Promise<Array>} Array von Flown
  */
-export const getUserRoutines = async (userEmail) => {
+export const getUserFlows = async (userEmail) => {
   try {
     const { data, error } = await supabase
-      .from('routines')
+      .from('flows')
       .select('*')
       .eq('user_email', userEmail);
 
@@ -18,30 +18,30 @@ export const getUserRoutines = async (userEmail) => {
 
     return data;
   } catch (error) {
-    console.error('Fehler beim Laden der Routinen:', error.message);
+    console.error('Fehler beim Laden der Flows:', error.message);
     throw error;
   }
 };
 
 /**
- * Lädt eine spezifische Routine anhand ihrer ID
- * @param {string} routineId - ID der Routine
- * @returns {Promise<Object>} Routine-Objekt
+ * Lädt eine spezifische Flow anhand ihrer ID
+ * @param {string} flowId - ID der Flow
+ * @returns {Promise<Object>} Flow-Objekt
  */
-export const getRoutine = async (routineId) => {
+export const getFlow = async (flowId) => {
   try {
-    const { data: routineData, error: routineError } = await supabase
-      .from('routines')
+    const { data: flowData, error: flowError } = await supabase
+      .from('flows')
       .select('*')
-      .eq('id', routineId)
+      .eq('id', flowId)
       .single();
 
-    if (routineError) {
-      throw routineError;
+    if (flowError) {
+      throw flowError;
     }
 
     const { data: posesData, error: posesError } = await supabase
-      .from('routine_poses')
+      .from('flow_poses')
       .select(`
         *,
         poses (
@@ -50,7 +50,7 @@ export const getRoutine = async (routineId) => {
           name_sanskrit
         )
       `)
-      .eq('routine_id', routineId)
+      .eq('flow_id', flowId)
       .order('position');
 
     if (posesError) {
@@ -66,99 +66,99 @@ export const getRoutine = async (routineId) => {
     }));
 
     return {
-      ...routineData,
+      ...flowData,
       poses: posesWithInfo
     };
   } catch (error) {
-    console.error('Fehler beim Laden der Routine:', error.message);
+    console.error('Fehler beim Laden der Flow:', error.message);
     throw error;
   }
 };
 
 /**
- * Saves or updates a routine
- * @param {Object} routine - Routine object to save
- * @returns {Promise<Object>} Saved routine
+ * Saves or updates a flow
+ * @param {Object} flow - Flow object to save
+ * @returns {Promise<Object>} Saved flow
  */
-export const saveRoutine = async (data) => {
+export const saveFlow = async (data) => {
   try {
-    const { poses, ...routine } = data;
+    const { poses, ...flow } = data;
 
     
-    if (routine.id) {
-      // Update routine
-      const { data: routineData, error: routineError } = await supabase
-        .from('routines')
-        .update(routine)
-        .eq('id', routine.id)
+    if (flow.id) {
+      // Update flow
+      const { data: flowData, error: flowError } = await supabase
+        .from('flows')
+        .update(flow)
+        .eq('id', flow.id)
         .select()
         .single();
 
-      if (routineError) {
-        throw routineError;
+      if (flowError) {
+        throw flowError;
       }
 
       // Delete existing poses
       const { error: deleteError } = await supabase
-        .from('routine_poses')
+        .from('flow_poses')
         .delete()
-        .eq('routine_id', routine.id);
+        .eq('flow_id', flow.id);
 
       if (deleteError) {
         throw deleteError;
       }
       // Insert new poses
-      const posesWithRoutineId = poses.map((pose, index) => ({
+      const posesWithFlowId = poses.map((pose, index) => ({
         pose_id: pose.pose_id,
         breath: pose.breath,
         equipment: pose.equipment,
         type: pose.type,
         text: pose.text,
-        routine_id: routineData.id,
+        flow_id: flowData.id,
         position: index
       }));
 
       const { error: posesError } = await supabase
-        .from('routine_poses')
-        .insert(posesWithRoutineId);
+        .from('flow_poses')
+        .insert(posesWithFlowId);
 
       if (posesError) {
         throw posesError;
       }
 
-      return routineData.id;
+      return flowData.id;
 
     } else {
-      // Insert new routine
-      const { data: routineData, error: routineError } = await supabase
-        .from('routines')
-        .insert(routine)
+      // Insert new flow
+      const { data: flowData, error: flowError } = await supabase
+        .from('flows')
+        .insert(flow)
         .select()
         .single();
 
-      if (routineError) {
-        throw routineError;
+      if (flowError) {
+        throw flowError;
       }
 
       // Insert poses
-      const posesWithRoutineId = poses.map((pose, index) => ({
+      const posesWithFlowId = poses.map((pose, index) => ({
         ...pose,
-        routine_id: routineData.id,
+        flow_id: flowData.id,
         position: index
       }));
 
       const { error: posesError } = await supabase
-        .from('routine_poses')
-        .insert(posesWithRoutineId);
+        .from('flow_poses')
+        .insert(posesWithFlowId);
 
       if (posesError) {
         throw posesError;
       }
 
-      return routineData.id;
+      return flowData.id;
     }
   } catch (error) {
-    console.error('Fehler beim Speichern der Routine:', error.message);
+    console.error('Fehler beim Speichern der Flow:', error.message);
     throw error;
   }
 };

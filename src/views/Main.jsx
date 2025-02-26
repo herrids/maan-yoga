@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next';
 
-import { getUserRoutines } from "../services/supabaseService";
+import { getUserFlows } from "../services/supabaseService";
 
-import RoutineCard from "../components/RoutineCard/RoutineCard";
+import FlowCard from "../components/FlowCard/FlowCard";
 import Loader from "../components/Loader/Loader";
 
 import { useAuth0 } from '@auth0/auth0-react';
 
-export default function RoutineOverview() {
-    const [routines, setRoutines] = useState([])
+export default function FlowOverview() {
+    const [flows, setFlows] = useState([])
     const [loading, setLoading] = useState(true)
     const {user} = useAuth0();
 
     const { t } = useTranslation();
 
     useEffect(()=>{
-        getUserRoutines(user.email)
-            .then( routineList => {
-                setRoutines(routineList)
+        getUserFlows(user.email)
+            .then( flowList => {
+                setFlows(flowList)
                 setLoading(false)
             })
     }, [user])
@@ -27,11 +27,11 @@ export default function RoutineOverview() {
         <>
         <main>
             {loading == false ? 
-                <div className="routine-overview">
-                    {routines.length ? routines.map((routine, index) => (
-                    <RoutineCard
+                <div className="flow-overview">
+                    {flows.length ? flows.map((flow, index) => (
+                    <FlowCard
                         key={index}
-                        routine={routine}
+                        flow={flow}
                     />
                     )) : <p>{t("noFlow")}</p>}
                 </div>

@@ -1,21 +1,20 @@
-import "./Routine.scss"
+import "./Flow.scss"
 import { formatDate } from "../../util/dateFormat"
 import { useTranslation } from 'react-i18next';
 
 export default function (props) {
-    const {name, created_at, poses} = props.routine
+    const {name, created_at, poses} = props.flow
     const { t, i18n } = useTranslation();
-    console.log(poses)
     return (
-        <div className="yoga-routine">
-            <h2 className="yoga-routine__name">{name}</h2>
-            <p className="yoga-routine__date">{formatDate(created_at)}</p>
-            <div className="yoga-routine__poses">
+        <div className="yoga-flow">
+            <h2 className="yoga-flow__name">{name}</h2>
+            <p className="yoga-flow__date">{formatDate(created_at)}</p>
+            <div className="yoga-flow__poses">
             {poses && poses.map((pose, index) => (
-                <div key={index} className="yoga-routine__poses__pose">
+                <div key={index} className="yoga-flow__poses__pose">
                     { pose.type == "text" ? (
                         <>
-                            <p className="yoga-routine__poses__pose-text">{pose.text}</p>
+                            <p className="yoga-flow__poses__pose-text">{pose.text}</p>
                         </>
                     ) : (
                         <>
@@ -24,8 +23,8 @@ export default function (props) {
                                 alt={pose.pose_id}
                                 /* onLoad={handleImageLoad} */
                             />
-                            <div className="yoga-routine__poses__pose-details">
-                                <p className="yoga-routine__poses__pose-name">{i18n.language === 'de' ? pose.name_german : pose.name_english}</p>
+                            <div className="yoga-flow__poses__pose-details">
+                                <p className="yoga-flow__poses__pose-name">{i18n.language === 'de' ? pose.name_german : pose.name_english}</p>
                                 <p>{pose.breath} </p>
                                 {pose.equipment && pose.equipment.length ? (
                                     <>
