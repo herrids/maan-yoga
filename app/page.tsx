@@ -9,14 +9,10 @@ export default function Home() {
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
       <div className="inline-block max-w-xl text-center justify-center">
-        <Logo size={150}/>
-        <span className={title()}>
-          Your Practice,
-        </span>
+        <Logo size={150} />
+        <span className={title()}>Your Practice,</span>
         <br />
-        <span className={title()}>
-          Your Path
-        </span>
+        <span className={title()}>Your Path</span>
         <div className={subtitle({ class: "mt-4" })}>
           Simple, intuitive and personalized yoga flow builder.
         </div>

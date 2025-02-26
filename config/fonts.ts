@@ -1,4 +1,4 @@
-import { Alegreya as FontSerif, Poppins as FontSans   } from "next/font/google";
+import { Alegreya as FontSerif, Poppins as FontSans } from "next/font/google";
 
 export const fontSerif = FontSerif({
   subsets: ["latin"],

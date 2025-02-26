@@ -1,7 +1,8 @@
-import { title } from "@/components/primitives";
 import { Button } from "@heroui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+
+import { title } from "@/components/primitives";
 
 export default function FlowNotFound() {
   return (
@@ -10,14 +11,14 @@ export default function FlowNotFound() {
       <p className="text-default-500 mt-4 mb-8">
         Der gesuchte Yoga Flow existiert nicht oder wurde gelöscht.
       </p>
-      <Button 
-        as={Link} 
-        href="/flows" 
-        color="primary" 
+      <Button
+        as={Link}
+        color="primary"
+        href="/flows"
         startContent={<ArrowLeft size={18} />}
       >
         Zurück zur Übersicht
       </Button>
     </div>
   );
-} 
+}

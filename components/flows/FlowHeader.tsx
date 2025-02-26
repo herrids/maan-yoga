@@ -1,7 +1,8 @@
-import { title } from "@/components/primitives";
 import { Button } from "@heroui/button";
 import { ArrowLeft, Edit, Trash } from "lucide-react";
 import Link from "next/link";
+
+import { title } from "@/components/primitives";
 
 interface FlowHeaderProps {
   id: string;
@@ -10,16 +11,21 @@ interface FlowHeaderProps {
   onDelete?: () => void;
 }
 
-export function FlowHeader({ id, name, formattedDate, onDelete }: FlowHeaderProps) {
+export function FlowHeader({
+  id,
+  name,
+  formattedDate,
+  onDelete,
+}: FlowHeaderProps) {
   return (
     <>
       <div className="mb-6">
-        <Button 
-          as={Link} 
-          href="/flows" 
-          variant="light" 
-          color="default" 
+        <Button
+          as={Link}
+          color="default"
+          href="/flows"
           startContent={<ArrowLeft size={18} />}
+          variant="light"
         >
           Zurück zur Übersicht
         </Button>
@@ -31,19 +37,19 @@ export function FlowHeader({ id, name, formattedDate, onDelete }: FlowHeaderProp
           <p className="text-default-500">Erstellt am {formattedDate}</p>
         </div>
         <div className="flex gap-2">
-          <Button 
+          <Button
             as={Link}
-            href={`/flows/${id}/edit`}
-            variant="flat" 
             color="primary"
+            href={`/flows/${id}/edit`}
             startContent={<Edit size={18} />}
+            variant="flat"
           >
             Bearbeiten
           </Button>
-          <Button 
-            variant="flat" 
+          <Button
             color="danger"
             startContent={<Trash size={18} />}
+            variant="flat"
             onPress={onDelete}
           >
             Löschen
@@ -52,4 +58,4 @@ export function FlowHeader({ id, name, formattedDate, onDelete }: FlowHeaderProp
       </div>
     </>
   );
-} 
+}

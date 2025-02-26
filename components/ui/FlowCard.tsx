@@ -1,6 +1,7 @@
 import { Card, CardBody, CardHeader } from "@heroui/card";
-import { YogaFlow } from "@/types";
 import Link from "next/link";
+
+import { YogaFlow } from "@/types";
 
 interface FlowCardProps {
   flow: YogaFlow;
@@ -14,12 +15,14 @@ export function FlowCard({ flow }: FlowCardProps) {
   });
 
   return (
-    <Link href={`/flows/${flow.id}`} className="block">
+    <Link className="block" href={`/flows/${flow.id}`}>
       <Card className="max-w-md hover:shadow-md transition-shadow duration-300 cursor-pointer">
         <CardHeader className="flex gap-3">
           <div className="flex flex-col">
             <p className="text-md font-semibold">{flow.name}</p>
-            <p className="text-small text-default-500">Erstellt am {formattedDate}</p>
+            <p className="text-small text-default-500">
+              Erstellt am {formattedDate}
+            </p>
           </div>
         </CardHeader>
         <CardBody>
@@ -33,4 +36,4 @@ export function FlowCard({ flow }: FlowCardProps) {
       </Card>
     </Link>
   );
-} 
+}

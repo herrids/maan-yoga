@@ -8,10 +8,6 @@ export const siteConfig = {
       label: "Meine Flows",
       href: "/flows",
     },
-    {
-      label: "New",
-      href: "/new",
-    },
   ],
   navMenuItems: [
     {

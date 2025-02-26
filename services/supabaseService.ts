@@ -1,4 +1,4 @@
-import { supabase } from '../config/supabaseConfig';
+import { supabase } from "../config/supabaseConfig";
 
 /**
  * Lädt alle Flown für einen bestimmten Benutzer
@@ -8,9 +8,9 @@ import { supabase } from '../config/supabaseConfig';
 export const getUserFlows = async (userEmail: string) => {
   try {
     const { data, error } = await supabase
-      .from('flows')
-      .select('*')
-      .eq('user_email', userEmail);
+      .from("flows")
+      .select("*")
+      .eq("user_email", userEmail);
 
     if (error) {
       throw error;
@@ -18,8 +18,10 @@ export const getUserFlows = async (userEmail: string) => {
 
     return data;
   } catch (error: unknown) {
-    console.error('Fehler beim Laden der Flown:', error instanceof Error ? error.message : String(error));
-    throw error;
+    throw new Error(
+      "Fehler beim Laden der Flown: " +
+        (error instanceof Error ? error.message : String(error)),
+    );
   }
 };
 
@@ -27,13 +29,13 @@ export const getUserFlows = async (userEmail: string) => {
  * Lädt eine spezifische Flow anhand ihrer ID
  * @param {string} flowId - ID der Flow
  * @returns {Promise<Object>} Flow-Objekt
- */ 
+ */
 export const getFlow = async (flowId: string) => {
   try {
     const { data: flowData, error: flowError } = await supabase
-      .from('flows')
-      .select('*')
-      .eq('id', flowId)
+      .from("flows")
+      .select("*")
+      .eq("id", flowId)
       .single();
 
     if (flowError) {
@@ -41,37 +43,41 @@ export const getFlow = async (flowId: string) => {
     }
 
     const { data: posesData, error: posesError } = await supabase
-      .from('flow_poses')
-      .select(`
+      .from("flow_poses")
+      .select(
+        `
         *,
         poses (
           name_english,
           name_german,
           name_sanskrit
         )
-      `)
-      .eq('flow_id', flowId)
-      .order('position');
+        `,
+      )
+      .eq("flow_id", flowId)
+      .order("position");
 
     if (posesError) {
       throw posesError;
     }
 
     // Map the poses data to include the pose information directly
-    const posesWithInfo = posesData.map(pose => ({
+    const posesWithInfo = posesData.map((pose) => ({
       ...pose,
       name_english: pose.poses?.name_english,
       name_german: pose.poses?.name_german,
-      name_sanskrit: pose.poses?.name_sanskrit
+      name_sanskrit: pose.poses?.name_sanskrit,
     }));
 
     return {
       ...flowData,
-      poses: posesWithInfo
+      poses: posesWithInfo,
     };
   } catch (error: unknown) {
-    console.error('Fehler beim Laden der Flow:', error instanceof Error ? error.message : String(error));
-    throw error;
+    throw new Error(
+      "Fehler beim Laden der Flow: " +
+        (error instanceof Error ? error.message : String(error)),
+    );
   }
 };
 
@@ -84,13 +90,12 @@ export const saveFlow = async (data: any) => {
   try {
     const { poses, ...flow } = data;
 
-    
     if (flow.id) {
       // Update flow
       const { data: flowData, error: flowError } = await supabase
-        .from('flows')
+        .from("flows")
         .update(flow)
-        .eq('id', flow.id)
+        .eq("id", flow.id)
         .select()
         .single();
 
@@ -100,9 +105,9 @@ export const saveFlow = async (data: any) => {
 
       // Delete existing poses
       const { error: deleteError } = await supabase
-        .from('flow_poses')
+        .from("flow_poses")
         .delete()
-        .eq('flow_id', flow.id);
+        .eq("flow_id", flow.id);
 
       if (deleteError) {
         throw deleteError;
@@ -115,11 +120,11 @@ export const saveFlow = async (data: any) => {
         type: pose.type,
         text: pose.text,
         flow_id: flowData.id,
-        position: index
+        position: index,
       }));
 
       const { error: posesError } = await supabase
-        .from('flow_poses')
+        .from("flow_poses")
         .insert(posesWithFlowId);
 
       if (posesError) {
@@ -127,11 +132,10 @@ export const saveFlow = async (data: any) => {
       }
 
       return flowData.id;
-
     } else {
       // Insert new flow
       const { data: flowData, error: flowError } = await supabase
-        .from('flows')
+        .from("flows")
         .insert(flow)
         .select()
         .single();
@@ -144,11 +148,11 @@ export const saveFlow = async (data: any) => {
       const posesWithFlowId = poses.map((pose: any, index: number) => ({
         ...pose,
         flow_id: flowData.id,
-        position: index
+        position: index,
       }));
 
       const { error: posesError } = await supabase
-        .from('flow_poses')
+        .from("flow_poses")
         .insert(posesWithFlowId);
 
       if (posesError) {
@@ -158,8 +162,10 @@ export const saveFlow = async (data: any) => {
       return flowData.id;
     }
   } catch (error: unknown) {
-    console.error('Fehler beim Speichern der Flow:', error instanceof Error ? error.message : String(error));
-    throw error;
+    throw new Error(
+      "Fehler beim Speichern der Flow: " +
+        (error instanceof Error ? error.message : String(error)),
+    );
   }
 };
 
@@ -170,9 +176,9 @@ export const saveFlow = async (data: any) => {
 export const getAllPoses = async () => {
   try {
     const { data, error } = await supabase
-      .from('poses')
-      .select('*')
-      .order('id');
+      .from("poses")
+      .select("*")
+      .order("id");
 
     if (error) {
       throw error;
@@ -180,7 +186,9 @@ export const getAllPoses = async () => {
 
     return data;
   } catch (error: unknown) {
-    console.error('Fehler beim Laden der Posen:', error instanceof Error ? error.message : String(error));
-    throw error;
+    throw new Error(
+      "Fehler beim Laden der Posen: " +
+        (error instanceof Error ? error.message : String(error)),
+    );
   }
-}; 
+};

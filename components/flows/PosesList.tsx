@@ -1,5 +1,6 @@
 import { Card, CardBody, CardHeader } from "@heroui/card";
 import { Divider } from "@heroui/divider";
+
 import { PoseCard } from "./PoseCard";
 
 interface PosesListProps {
@@ -8,7 +9,7 @@ interface PosesListProps {
 
 export function PosesList({ poses }: PosesListProps) {
   const poseCount = poses?.length || 0;
-  
+
   return (
     <Card>
       <CardHeader className="justify-between">
@@ -33,4 +34,4 @@ export function PosesList({ poses }: PosesListProps) {
       </CardBody>
     </Card>
   );
-} 
+}

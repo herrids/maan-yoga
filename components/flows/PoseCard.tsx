@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { PoseCardModal } from "./PoseCardModal";
 import { useState } from "react";
+
+import { PoseCardModal } from "./PoseCardModal";
 
 interface PoseCardProps {
   pose: {
@@ -23,13 +24,14 @@ export function PoseCard({ pose, onPoseUpdate, onPoseDelete }: PoseCardProps) {
 
   const handlePoseChange = (poseId: string) => {
     const updatedPose = { ...currentPose, pose_id: poseId };
+
     setCurrentPose(updatedPose);
     if (onPoseUpdate) {
       onPoseUpdate(updatedPose);
     }
   };
 
-  const handleBreathChange = (breath: string | null) => {
+  /* const handleBreathChange = (breath: string | null) => {
     const updatedPose = { ...currentPose, breath };
     setCurrentPose(updatedPose);
     if (onPoseUpdate) {
@@ -43,7 +45,7 @@ export function PoseCard({ pose, onPoseUpdate, onPoseDelete }: PoseCardProps) {
     if (onPoseUpdate) {
       onPoseUpdate(updatedPose);
     }
-  };
+  }; */
 
   const handleDelete = () => {
     if (onPoseDelete) {
@@ -57,36 +59,42 @@ export function PoseCard({ pose, onPoseUpdate, onPoseDelete }: PoseCardProps) {
         <div className="flex flex-col items-center p-4 h-full w-full">
           {currentPose.pose_id && (
             <div className="w-32 h-32 relative mb-4">
-              <Image 
-                src={`https://kbmjjri0rfvoollc.public.blob.vercel-storage.com/poses/${currentPose.pose_id}.svg`}
-                alt={currentPose.name_german || currentPose.name_english || "Yoga Pose"}
+              <Image
                 fill
+                alt={
+                  currentPose.name_german ||
+                  currentPose.name_english ||
+                  "Yoga Pose"
+                }
                 className="object-contain"
+                src={`https://kbmjjri0rfvoollc.public.blob.vercel-storage.com/poses/${currentPose.pose_id}.svg`}
               />
             </div>
           )}
-          
+
           <div className="flex flex-col gap-1 text-center">
             {currentPose.name_german && (
               <p className="font-medium text-lg">{currentPose.name_german}</p>
             )}
-            
+
             {currentPose.breath && (
               <p className="text-sm text-default-600 mt-1">
-                <span className="font-medium">Atmung:</span> {currentPose.breath}
+                <span className="font-medium">Breath:</span>
+                {currentPose.breath}
               </p>
             )}
-            
+
             {currentPose.equipment && (
               <p className="text-sm text-default-600">
-                <span className="font-medium">Hilfsmittel:</span> {currentPose.equipment}
+                <span className="font-medium">Hilfsmittel:</span>
+                {currentPose.equipment}
               </p>
             )}
           </div>
         </div>
       );
     }
-    
+
     if (currentPose.type === "text") {
       return (
         <div className="p-4 h-full w-full flex items-center">
@@ -94,21 +102,25 @@ export function PoseCard({ pose, onPoseUpdate, onPoseDelete }: PoseCardProps) {
         </div>
       );
     }
-    
+
     return null;
   };
 
   return (
     <PoseCardModal
-      onPoseChange={handlePoseChange}
-      onDelete={handleDelete}
-      currentPoseId={currentPose.pose_id}
       currentBreath={currentPose.breath || null}
       currentEquipment={currentPose.equipment || null}
+      currentPoseId={currentPose.pose_id}
+      onDelete={handleDelete}
+      onPoseChange={handlePoseChange}
     >
-      <div className={`border rounded-lg cursor-pointer transition-colors hover:border-primary-400 h-full w-full ${currentPose.type === "text" ? "bg-default-50" : ""}`}>
+      <div
+        className={`border rounded-lg cursor-pointer transition-colors hover:border-primary-400 h-full w-full ${
+          currentPose.type === "text" ? "bg-default-50" : ""
+        }`}
+      >
         {renderCardContent()}
       </div>
     </PoseCardModal>
   );
-} 
+}
