@@ -27,7 +27,7 @@ import {
 import Image from "next/image";
 import { Switch } from "@heroui/switch";
 
-import { getAllPoses } from "@/services/supabaseService";
+import { usePoseManager } from "@/components/poses/PoseManager";
 
 interface PoseCardModalProps {
   children: React.ReactNode;
@@ -73,10 +73,10 @@ export function PoseCardModal({
   const [allPoses, setAllPoses] = React.useState<
     Array<{
       id: string;
-      name: string;
-      name_german?: string;
-      name_english?: string;
-      name_sanskrit?: string;
+      name_english: string;
+      name_german?: string | null;
+      name_sanskrit?: string | null;
+      description?: string | null;
     }>
   >([]);
   const [isOpen, setIsOpen] = React.useState(false);
@@ -84,31 +84,20 @@ export function PoseCardModal({
   const [textToggle, settextToggle] = React.useState<boolean>(istextToggle);
   const [poseText, setPoseText] = React.useState<string>(customText);
 
+  const { getAllPoses } = usePoseManager();
+  const posesQuery = getAllPoses();
+
   React.useEffect(() => {
-    if (isOpen) {
-      const fetchPoses = async () => {
-        try {
-          const poses = await getAllPoses();
-
-          setAllPoses(poses);
-        } catch (error) {
-          throw new Error(
-            "Error fetching poses: " +
-              (error instanceof Error ? error.message : String(error)),
-          );
-        }
-      };
-
-      fetchPoses();
+    if (isOpen && posesQuery.data) {
+      setAllPoses(posesQuery.data);
     }
-  }, [isOpen]);
+  }, [isOpen, posesQuery.data]);
 
   // Get display name for each pose (prefer German, fallback to English)
   const getPoseName = (pose: any) => {
     return (
       pose.name_german ||
       pose.name_english ||
-      pose.name ||
       pose.name_sanskrit ||
       "Unnamed Pose"
     );

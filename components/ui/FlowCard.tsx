@@ -1,10 +1,9 @@
 import { Card, CardBody, CardHeader } from "@heroui/card";
 import Link from "next/link";
-
-import { YogaFlow } from "@/types";
+import { Flow } from "@prisma/client";
 
 interface FlowCardProps {
-  flow: YogaFlow;
+  flow: Flow;
 }
 
 export function FlowCard({ flow }: FlowCardProps) {
@@ -27,11 +26,6 @@ export function FlowCard({ flow }: FlowCardProps) {
         </CardHeader>
         <CardBody>
           <p>{flow.description || "Keine Beschreibung vorhanden."}</p>
-          <p className="text-small text-default-500 mt-2">
-            {flow.poses && flow.poses.length > 0
-              ? `${flow.poses.length} Posen`
-              : "Keine Posen hinzugefügt"}
-          </p>
         </CardBody>
       </Card>
     </Link>

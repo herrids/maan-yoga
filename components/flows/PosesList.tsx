@@ -8,10 +8,9 @@ import { PoseCardModal } from "./PoseCardModal";
 
 interface PosesListProps {
   poses: any[] | null;
-  onAddPose?: () => void;
 }
 
-export function PosesList({ poses, onAddPose }: PosesListProps) {
+export function PosesList({ poses }: PosesListProps) {
   const poseCount = poses?.length || 0;
 
   return (
@@ -27,13 +26,13 @@ export function PosesList({ poses, onAddPose }: PosesListProps) {
         {!poses || poses.length === 0 ? (
           <div className="flex flex-col items-center gap-4">
             <p className="text-default-500">Keine Posen hinzugefügt.</p>
-            <Button
-              color="primary"
-              startContent={<Plus size={18} />}
-              onPress={onAddPose}
-            >
-              Pose hinzufügen
-            </Button>
+            <div>
+              <PoseCardModal>
+                <Button color="primary" startContent={<Plus size={18} />}>
+                  Pose hinzufügen
+                </Button>
+              </PoseCardModal>
+            </div>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">

@@ -6,18 +6,18 @@ import { Button } from "@heroui/button";
 import { useState, useEffect } from "react";
 import { Pencil } from "lucide-react";
 
+import { trpc } from "@/utils/trpc";
+
 interface FlowDescriptionProps {
-  description: string | null;
-  onDescriptionChange?: (newDescription: string) => void;
+  id: string;
+  value: string | null;
 }
 
-export function FlowDescription({
-  description,
-  onDescriptionChange,
-}: FlowDescriptionProps) {
+export function FlowDescription({ id, value }: FlowDescriptionProps) {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedDescription, setEditedDescription] = useState(description || "");
+  const [description, setDescription] = useState(value || "");
   const [isHovering, setIsHovering] = useState(false);
+  const flowMutation = trpc.flow.updateFlow.useMutation();
 
   useEffect(() => {
     if (isEditing) {
@@ -30,14 +30,12 @@ export function FlowDescription({
   };
 
   const handleSave = () => {
-    if (onDescriptionChange) {
-      onDescriptionChange(editedDescription);
-    }
+    flowMutation.mutate({ id, description });
     setIsEditing(false);
   };
 
   const handleCancel = () => {
-    setEditedDescription(description || "");
+    setDescription(value || "");
     setIsEditing(false);
   };
 
@@ -52,8 +50,8 @@ export function FlowDescription({
             <Textarea
               minRows={2}
               placeholder="Enter your description"
-              value={editedDescription}
-              onChange={(e) => setEditedDescription(e.target.value)}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             />
             <div className="flex gap-2">
               <Button color="primary" size="sm" onClick={handleSave}>
