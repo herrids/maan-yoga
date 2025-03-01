@@ -27,7 +27,7 @@ export default async function FlowDetailPage({
 
   return (
     <div className="container mx-auto px-6 py-8">
-      <FlowHeader formattedDate={formattedDate} id={flow.id} name={flow.name} />
+      <FlowHeader formattedDate={formattedDate} name={flow.name} />
 
       <div className="flex flex-col gap-8 mt-8">
         <FlowDescription description={flow.description} />

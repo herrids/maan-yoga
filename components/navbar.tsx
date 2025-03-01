@@ -8,9 +8,8 @@ import {
   NavbarMenuItem,
 } from "@heroui/navbar";
 import { Link } from "@heroui/link";
-import { link as linkStyles } from "@heroui/theme";
 import NextLink from "next/link";
-import clsx from "clsx";
+import { Button } from "@heroui/button";
 
 import { Logo } from "./icons";
 
@@ -22,11 +21,13 @@ export const Navbar = () => {
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Logo />
-            <p className="font-bold text-inherit font-serif">Yoga Flow App</p>
+            <Logo size={50} />
+            <p className="font-bold text-inherit font-serif text-xl">
+              Yoga Flow App
+            </p>
           </NextLink>
         </NavbarBrand>
-        <ul className="hidden lg:flex gap-4 justify-start ml-2">
+        {/* <ul className="hidden lg:flex gap-4 justify-start ml-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
@@ -41,7 +42,7 @@ export const Navbar = () => {
               </NextLink>
             </NavbarItem>
           ))}
-        </ul>
+        </ul> */}
       </NavbarContent>
 
       <NavbarContent
@@ -52,12 +53,22 @@ export const Navbar = () => {
           {/* <Link isExternal aria-label="Twitter" href={siteConfig.links.twitter}>
             <Instagram />
           </Link> */}
+          <NextLink href={siteConfig.links.flows}>
+            <Button color="primary" variant="ghost">
+              Meine Flows
+            </Button>
+          </NextLink>
           <ThemeSwitch />
         </NavbarItem>
         {/* <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem> */}
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+        <NextLink href={siteConfig.links.flows}>
+          <Button color="primary" size="sm" variant="ghost">
+            Meine Flows
+          </Button>
+        </NextLink>
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>

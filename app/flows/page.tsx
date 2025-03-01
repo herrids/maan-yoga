@@ -11,7 +11,7 @@ export default async function FlowsPage() {
 
   return (
     <div className="container mx-auto px-6 py-8">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
         <h1 className={title({ size: "sm" })}>Meine Yoga Flows</h1>
         <Button
           as={Link}

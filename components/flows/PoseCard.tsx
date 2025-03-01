@@ -79,14 +79,13 @@ export function PoseCard({ pose, onPoseUpdate, onPoseDelete }: PoseCardProps) {
 
             {currentPose.breath && (
               <p className="text-sm text-default-600 mt-1">
-                <span className="font-medium">Breath:</span>
                 {currentPose.breath}
               </p>
             )}
 
             {currentPose.equipment && (
               <p className="text-sm text-default-600">
-                <span className="font-medium">Hilfsmittel:</span>
+                <span className="font-medium">Hilfsmittel: </span>
                 {currentPose.equipment}
               </p>
             )}
@@ -115,7 +114,7 @@ export function PoseCard({ pose, onPoseUpdate, onPoseDelete }: PoseCardProps) {
       onPoseChange={handlePoseChange}
     >
       <div
-        className={`border rounded-lg cursor-pointer transition-colors hover:border-primary-400 h-full w-full ${
+        className={`border border-gray-100 rounded-lg cursor-pointer transition-colors hover:border-primary h-full w-full ${
           currentPose.type === "text" ? "bg-default-50" : ""
         }`}
       >

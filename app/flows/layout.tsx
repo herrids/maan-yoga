@@ -5,7 +5,7 @@ export default function FlowsLayout({
 }) {
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-4 md:py-8">
-      <div className="w-full max-w-7xl">{children}</div>
+      <div className="w-full max-w-6xl">{children}</div>
     </section>
   );
 }
