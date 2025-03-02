@@ -35,7 +35,7 @@ export default async function FlowDetailPage({
 
       <div className="flex flex-col gap-8 mt-8">
         <FlowDescription id={flow.id} value={flow.description} />
-        <PosesList poses={flow.poses} />
+        <PosesList flowId={flow.id} initialFlowPoses={flow.poses} />
       </div>
     </div>
   );

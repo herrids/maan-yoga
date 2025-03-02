@@ -24,6 +24,7 @@
   "@heroui/system": "2.4.10",
   "@heroui/tabs": "^2.2.12",
   "@heroui/theme": "2.4.9",
+  "@heroui/toast": "^2.0.5",
   "@prisma/client": "^6.4.1",
   "@react-aria/ssr": "3.9.7",
   "@react-aria/visually-hidden": "3.8.19",

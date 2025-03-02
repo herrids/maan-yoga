@@ -34,9 +34,9 @@ export async function getFlowById(flowId: string) {
     // Map to match the expected format
     const posesWithInfo = flowPoses.map((flowPose) => ({
       ...flowPose,
-      name_english: flowPose.pose.name_english,
-      name_german: flowPose.pose.name_german,
-      name_sanskrit: flowPose.pose.name_sanskrit,
+      name_english: flowPose.pose?.name_english,
+      name_german: flowPose.pose?.name_german,
+      name_sanskrit: flowPose.pose?.name_sanskrit,
     }));
 
     return {
@@ -44,8 +44,7 @@ export async function getFlowById(flowId: string) {
       poses: posesWithInfo,
     };
   } catch (error) {
-    console.error("Error fetching flow:", error);
-    throw new Error("Failed to fetch flow");
+    throw new Error("Failed to fetch flow", { cause: error });
   }
 }
 
@@ -65,9 +64,8 @@ export async function getUserFlows(userEmail: string) {
       },
     });
   } catch (error) {
-    console.error("Error fetching user flows:", error);
-    throw new Error("Failed to fetch user flows");
+    throw new Error("Failed to fetch user flows", { cause: error });
   }
 }
 
-// Add more flow-related database functions as needed 
+// Add more flow-related database functions as needed

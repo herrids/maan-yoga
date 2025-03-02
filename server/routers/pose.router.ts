@@ -1,5 +1,3 @@
-import { z } from "zod";
-
 import { publicProcedure, router } from "../trpc";
 
 import { prisma } from "@/utils/prisma";
@@ -12,5 +10,5 @@ export const poseRouter = router({
         id: "asc",
       },
     });
-  })
+  }),
 });

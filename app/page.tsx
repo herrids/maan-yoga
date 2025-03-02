@@ -21,15 +21,10 @@ export default function Home() {
       <div className="flex gap-3">
         <Link
           className={buttonStyles({
+            variant: "solid",
             color: "primary",
             radius: "full",
           })}
-          href={siteConfig.links.new}
-        >
-          New
-        </Link>
-        <Link
-          className={buttonStyles({ variant: "bordered", radius: "full" })}
           href={siteConfig.links.flows}
         >
           Your Flows

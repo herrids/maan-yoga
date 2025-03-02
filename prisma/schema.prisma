@@ -29,14 +29,14 @@ model Pose {
 model FlowPose {
   id         String   @id @default(uuid())
   created_at DateTime @default(now())
-  pose_id    String
+  pose_id    String?
   breath     String?
   flow_id    String
   equipment  String?
   position   Int
-  type       String?
+  type       String
   text       String?
 
   flow Flow @relation(fields: [flow_id], references: [id], onDelete: Cascade)
-  pose Pose @relation(fields: [pose_id], references: [id])
+  pose Pose? @relation(fields: [pose_id], references: [id])
 }

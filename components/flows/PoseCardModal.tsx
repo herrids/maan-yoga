@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Modal,
   ModalContent,
@@ -26,131 +26,94 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { Switch } from "@heroui/switch";
-  
+import { FlowPose, Pose } from "@prisma/client";
+
 interface PoseCardModalProps {
   children: React.ReactNode;
-  onPoseChange?: (poseId: string) => void;
-  onDelete?: () => void;
-  onNoteChange?: (note: string | null) => void;
-  onBreathChange?: (breath: string | null) => void;
-  onEquipmentChange?: (equipment: string | null) => void;
-  ontextToggleChange?: (istextToggle: boolean) => void;
-  onCustomTextChange?: (text: string) => void;
-  currentPoseId?: string;
-  currentBreath?: string | null;
-  currentEquipment?: string | null;
-  currentNote?: string | null;
-  istextToggle?: boolean;
-  customText?: string;
-  allPoses?: any[];
-  newFlowPose?: boolean;
+  allPoses: Pose[];
+  flowPose: FlowPose;
+  updateFlowPose: (flowPose: FlowPose) => void;
+  deleteFlowPose: (id: string) => void;
+  addNew?: boolean;
 }
 
 export function PoseCardModal({
   children,
-  onPoseChange,
-  onDelete,
-  onNoteChange,
-  onBreathChange,
-  onEquipmentChange,
-  ontextToggleChange,
-  onCustomTextChange,
-  newFlowPose = false,
   allPoses = [],
-  currentPoseId = "",
-  currentBreath = null,
-  currentEquipment = null,
-  currentNote = null,
-  istextToggle = true,
-  customText = "",
+  flowPose,
+  updateFlowPose,
+  deleteFlowPose,
 }: PoseCardModalProps) {
-  const [selectedBreath, setSelectedBreath] = useState(currentBreath);
-  const [selectedEquipment, setSelectedEquipment] = useState(currentEquipment);
-  const [note, setNote] = useState(currentNote);
   const [searchQuery, setSearchQuery] = useState("");
+  const [tempText, setTempText] = useState(flowPose.text || "");
 
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("pose");
-  const [textToggle, settextToggle] = useState(istextToggle);
-  const [poseText, setPoseText] = useState(customText);
-
-  // Get display name for each pose (prefer German, fallback to English)
-  const getPoseName = (pose: any) => {
-    return (
-      pose.name_german ||
-      pose.name_english ||
-      pose.name_sanskrit ||
-      "Unnamed Pose"
-    );
-  };
+  const [topPoses, setTopPoses] = useState<Pose[]>([]);
+  const [isShowingAllPoses, setIsShowingAllPoses] = useState(false);
+  const DEFAULT_POSE_LIMIT = 3;
 
   // Filter poses based on search query
   const filteredPoses = useMemo(() => {
     if (!searchQuery.trim()) return allPoses;
 
-    const query = searchQuery.toLowerCase();
-
-    return allPoses.filter((pose) => {
-      const germanName = (pose.name_german || "").toLowerCase();
-      const englishName = (pose.name_english || "").toLowerCase();
-      const sanskritName = (pose.name_sanskrit || "").toLowerCase();
-      const name = (pose.name || "").toLowerCase();
-
-      return (
-        germanName.includes(query) ||
-        englishName.includes(query) ||
-        sanskritName.includes(query) ||
-        name.includes(query)
-      );
-    });
+    return allPoses.filter((pose) =>
+      [
+        pose.name_german || "",
+        pose.name_english || "",
+        pose.name_sanskrit || "",
+      ].some((name) => name.toLowerCase().includes(searchQuery.toLowerCase())),
+    );
   }, [allPoses, searchQuery]);
 
-  // Get the first 3 matching poses
-  const topPoses = filteredPoses.slice(0, 3);
+  useEffect(() => {
+    setTopPoses(
+      isShowingAllPoses
+        ? filteredPoses
+        : filteredPoses.slice(0, DEFAULT_POSE_LIMIT),
+    );
+  }, [filteredPoses, isShowingAllPoses]);
 
   // Update handlers
-  const handleBreathChange = (keys: any) => {
+  const handleDetailsChange = (keys: any, type: "breath" | "equipment") => {
     const keysArray = Array.from(keys);
-    const newBreath = keysArray.length === 0 ? null : (keysArray[0] as string);
+    const newValue = keysArray.length === 0 ? null : (keysArray[0] as string);
 
-    setSelectedBreath(newBreath);
-    if (onBreathChange) {
-      onBreathChange(newBreath);
+    updateFlowPose({ ...flowPose, [type]: newValue });
+  };
+
+  const handleSaveText = () => {
+    if (flowPose.type === "text") {
+      updateFlowPose({
+        ...flowPose,
+        breath: null,
+        equipment: null,
+        pose_id: null,
+        type: "text",
+        text: tempText || null,
+      });
+    } else {
+      updateFlowPose({ ...flowPose, text: tempText || null });
     }
   };
 
-  const handleEquipmentChange = (keys: any) => {
-    const keysArray = Array.from(keys);
-    const newEquipment =
-      keysArray.length === 0 ? null : (keysArray[0] as string);
-
-    setSelectedEquipment(newEquipment);
-    if (onEquipmentChange) {
-      onEquipmentChange(newEquipment);
-    }
+  const handleToggleChange = (isChecked: boolean) => {
+    updateFlowPose({ ...flowPose, type: isChecked ? "image" : "text" });
   };
 
-  const handleNoteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newNote = e.target.value || null;
+  const handlePoseChange = (pose: any) => {
+    const updatedPose = { ...flowPose, pose_id: pose.id, pose };
 
-    setNote(newNote);
-    if (onNoteChange) {
-      onNoteChange(newNote);
-    }
+    updateFlowPose(updatedPose);
   };
 
-  const handletextToggleChange = (isChecked: boolean) => {
-    settextToggle(isChecked);
-    if (ontextToggleChange) {
-      ontextToggleChange(isChecked);
-    }
+  const handleDeleteFlowPose = () => {
+    deleteFlowPose(flowPose.id);
+    setIsOpen(false);
   };
 
-  const handleCustomTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPoseText(e.target.value);
-    if (onCustomTextChange) {
-      onCustomTextChange(e.target.value);
-    }
+  const showAllPoses = () => {
+    setIsShowingAllPoses(!isShowingAllPoses);
   };
 
   return (
@@ -182,7 +145,7 @@ export function PoseCardModal({
                 tabList: "w-full grid grid-cols-3 gap-2",
                 tab: "flex-1 justify-center",
               }}
-              isDisabled={!textToggle}
+              isDisabled={flowPose.type === "text"}
               selectedKey={activeTab}
               onSelectionChange={(key) => setActiveTab(key as string)}
             >
@@ -201,18 +164,18 @@ export function PoseCardModal({
                       <Switch
                         color="primary"
                         endContent={<TextIcon size={18} />}
-                        isSelected={textToggle}
+                        isSelected={flowPose.type === "image"}
                         size="md"
                         startContent={<ImageIcon size={18} />}
-                        onValueChange={handletextToggleChange}
+                        onValueChange={handleToggleChange}
                       />
                       <span className="text-sm text-gray-500">
-                        {textToggle ? "Image" : "Text"}
+                        {flowPose.type === "image" ? "Image" : "Text"}
                       </span>
                     </div>
                   </div>
 
-                  {textToggle ? (
+                  {flowPose.type === "image" ? (
                     <div className="flex flex-col gap-2">
                       <Input
                         className="w-full"
@@ -225,32 +188,30 @@ export function PoseCardModal({
                       />
                       {/* Display top 3 matching poses as images */}
                       {topPoses.length > 0 ? (
-                        <div className="grid grid-cols-3 gap-2 mt-2">
+                        <div className="grid grid-cols-3 gap-2 mt-2 max-h-[350px] overflow-y-auto">
                           {topPoses.map((pose) => (
                             <div
                               key={pose.id}
-                              className={`cursor-pointer rounded-md overflow-hidden border-2 p-1 flex flex-col items-center ${currentPoseId === pose.id ? "border-primary" : "border-transparent"}`}
+                              className={`cursor-pointer rounded-md overflow-hidden border-2 p-1 flex flex-col items-center ${pose.id === flowPose.pose_id ? "border-primary" : "border-transparent"}`}
                               role="button"
                               tabIndex={0}
-                              onClick={() =>
-                                onPoseChange && onPoseChange(pose.id)
-                              }
+                              onClick={() => handlePoseChange(pose)}
                               onKeyDown={(e) => {
                                 if (e.key === "Enter" || e.key === " ") {
-                                  onPoseChange && onPoseChange(pose.id);
+                                  handlePoseChange(pose);
                                 }
                               }}
                             >
                               <div className="w-full aspect-square bg-gray-100 rounded-md overflow-hidden relative">
                                 <Image
                                   fill
-                                  alt={getPoseName(pose)}
+                                  alt={pose.name_german || pose.name_english}
                                   className="object-contain"
                                   src={`https://kbmjjri0rfvoollc.public.blob.vercel-storage.com/poses/${pose.id}.svg`}
                                 />
                               </div>
                               <span className="text-xs mt-1 text-center truncate w-full">
-                                {getPoseName(pose)}
+                                {pose.name_german || pose.name_english}
                               </span>
                             </div>
                           ))}
@@ -260,21 +221,47 @@ export function PoseCardModal({
                           No poses found
                         </p>
                       )}
+                      <div className="flex justify-center">
+                        <span
+                          className="cursor-pointer text-sm text-gray-500 mt-2 hover:text-primary"
+                          role="button"
+                          tabIndex={0}
+                          onClick={() => showAllPoses()}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              showAllPoses();
+                            }
+                          }}
+                        >
+                          {isShowingAllPoses
+                            ? "Zeige weniger Posen"
+                            : "Alle Posen anzeigen"}
+                        </span>
+                      </div>
                     </div>
                   ) : (
                     <div className="flex flex-col gap-2">
-                      <Input
+                      <Textarea
                         className="w-full"
                         placeholder="Enter custom pose text..."
-                        value={poseText}
-                        onChange={handleCustomTextChange}
+                        value={tempText}
+                        onChange={(e) => setTempText(e.target.value)}
                       />
+                      <div className="flex gap-2">
+                        <Button
+                          color="primary"
+                          size="sm"
+                          onPress={handleSaveText}
+                        >
+                          Save
+                        </Button>
+                      </div>
                     </div>
                   )}
                 </div>
               </Tab>
               <Tab
-                key="breath"
+                key="details"
                 title={
                   <div className="flex items-center gap-2">
                     <NotebookTabs size={16} />
@@ -291,14 +278,20 @@ export function PoseCardModal({
                     <Listbox
                       aria-label="Select Breath"
                       disallowEmptySelection={false}
-                      selectedKeys={selectedBreath ? [selectedBreath] : []}
+                      selectedKeys={flowPose.breath ? [flowPose.breath] : []}
                       selectionMode="single"
                       variant="flat"
-                      onSelectionChange={handleBreathChange}
+                      onSelectionChange={(keys) =>
+                        handleDetailsChange(keys, "breath")
+                      }
                     >
                       <ListboxSection>
-                        <ListboxItem className="text-gray-500" key="Einatmen">Einatmen</ListboxItem>
-                        <ListboxItem className="text-gray-500" key="Ausatmen">Ausatmen</ListboxItem>
+                        <ListboxItem key="Einatmen" className="text-gray-500">
+                          Einatmen
+                        </ListboxItem>
+                        <ListboxItem key="Ausatmen" className="text-gray-500">
+                          Ausatmen
+                        </ListboxItem>
                       </ListboxSection>
                     </Listbox>
                   </div>
@@ -312,15 +305,21 @@ export function PoseCardModal({
                       aria-label="Select Equipment"
                       disallowEmptySelection={false}
                       selectedKeys={
-                        selectedEquipment ? [selectedEquipment] : []
+                        flowPose.equipment ? [flowPose.equipment] : []
                       }
                       selectionMode="single"
                       variant="flat"
-                      onSelectionChange={handleEquipmentChange}
+                      onSelectionChange={(keys) =>
+                        handleDetailsChange(keys, "equipment")
+                      }
                     >
                       <ListboxSection>
-                        <ListboxItem className="text-gray-500" key="Block">Block</ListboxItem>
-                        <ListboxItem className="text-gray-500" key="Strap">Strap</ListboxItem>
+                        <ListboxItem key="Block" className="text-gray-500">
+                          Block
+                        </ListboxItem>
+                        <ListboxItem key="Strap" className="text-gray-500">
+                          Strap
+                        </ListboxItem>
                       </ListboxSection>
                     </Listbox>
                   </div>
@@ -339,11 +338,16 @@ export function PoseCardModal({
                   <h4 className="text-sm font-medium">Add Notes</h4>
                   <Textarea
                     className="w-full"
-                    minRows={4}
+                    minRows={2}
                     placeholder="Add notes about this pose..."
-                    value={note || ""}
-                    onChange={handleNoteChange}
+                    value={tempText}
+                    onChange={(e) => setTempText(e.target.value)}
                   />
+                  <div className="flex gap-2">
+                    <Button color="primary" size="sm" onPress={handleSaveText}>
+                      Save
+                    </Button>
+                  </div>
                 </div>
               </Tab>
             </Tabs>
@@ -354,7 +358,7 @@ export function PoseCardModal({
               size="sm"
               startContent={<Trash size={16} />}
               variant="light"
-              onPress={onDelete}
+              onPress={handleDeleteFlowPose}
             >
               Delete Pose
             </Button>

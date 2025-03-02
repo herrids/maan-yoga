@@ -60,9 +60,9 @@ export const flowRouter = router({
       // Map to match the previous response format
       const posesWithInfo = flowPoses.map((flowPose) => ({
         ...flowPose,
-        name_english: flowPose.pose.name_english,
-        name_german: flowPose.pose.name_german,
-        name_sanskrit: flowPose.pose.name_sanskrit,
+        name_english: flowPose.pose?.name_english,
+        name_german: flowPose.pose?.name_german,
+        name_sanskrit: flowPose.pose?.name_sanskrit,
       }));
 
       return {
