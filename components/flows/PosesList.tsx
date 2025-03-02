@@ -4,6 +4,7 @@ import { Card, CardBody, CardHeader } from "@heroui/card";
 import { Divider } from "@heroui/divider";
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
+import { FlowPose } from "@prisma/client";
 import { addToast } from "@heroui/toast";
 
 import { PoseCard } from "./PoseCard";
@@ -12,11 +13,11 @@ import { PoseCardModal } from "./PoseCardModal";
 import { trpc } from "@/utils/trpc";
 
 interface PosesListProps {
-  initialFlowPoses: any[] | [];
+  initialFlowPoses: FlowPose[] | [];
   flowId: string;
 }
 
-const emptyFlowPose = (flowId: string, position: number): any => ({
+const emptyFlowPose = (flowId: string, position: number): FlowPose => ({
   id: "",
   created_at: new Date(),
   pose_id: null,
@@ -30,7 +31,7 @@ const emptyFlowPose = (flowId: string, position: number): any => ({
 
 export function PosesList({ initialFlowPoses, flowId }: PosesListProps) {
   const [allPoses, setAllPoses] = useState<any[]>([]);
-  const [flowPoses, setFlowPoses] = useState<any[]>(initialFlowPoses);
+  const [flowPoses, setFlowPoses] = useState<FlowPose[]>(initialFlowPoses);
 
   const poseCount = flowPoses?.length || 0;
 
@@ -69,11 +70,11 @@ export function PosesList({ initialFlowPoses, flowId }: PosesListProps) {
     }
   }, [poses]);
 
-  const addFlowPose = (flowPose: any) => {
+  const addFlowPose = (flowPose: FlowPose) => {
     createFlowPoseMutation.mutate(flowPose);
   };
 
-  const updateFlowPose = (flowPose: any) => {
+  const updateFlowPose = (flowPose: FlowPose) => {
     if (flowPose.id) {
       updateFlowPoseMutation.mutate(flowPose);
     }
