@@ -26,13 +26,12 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { Switch } from "@heroui/switch";
-import { FlowPose, Pose } from "@prisma/client";
 
 interface PoseCardModalProps {
   children: React.ReactNode;
-  allPoses: Pose[];
-  flowPose: FlowPose;
-  updateFlowPose: (flowPose: FlowPose) => void;
+  allPoses: any[];
+  flowPose: any;
+  updateFlowPose: (flowPose: any) => void;
   deleteFlowPose: (id: string) => void;
   addNew?: boolean;
 }
@@ -49,7 +48,7 @@ export function PoseCardModal({
 
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("pose");
-  const [topPoses, setTopPoses] = useState<Pose[]>([]);
+  const [topPoses, setTopPoses] = useState<any[]>([]);
   const [isShowingAllPoses, setIsShowingAllPoses] = useState(false);
   const DEFAULT_POSE_LIMIT = 3;
 

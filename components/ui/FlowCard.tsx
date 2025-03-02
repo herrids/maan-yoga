@@ -1,9 +1,8 @@
 import { Card, CardBody, CardHeader } from "@heroui/card";
 import Link from "next/link";
-import { Flow } from "@prisma/client";
 
 interface FlowCardProps {
-  flow: Flow;
+  flow: any;
 }
 
 export function FlowCard({ flow }: FlowCardProps) {
