@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { useState, useMemo } from "react";
 import {
   Modal,
   ModalContent,
@@ -26,9 +26,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { Switch } from "@heroui/switch";
-
-import { usePoseManager } from "@/components/poses/PoseManager";
-
+  
 interface PoseCardModalProps {
   children: React.ReactNode;
   onPoseChange?: (poseId: string) => void;
@@ -44,6 +42,8 @@ interface PoseCardModalProps {
   currentNote?: string | null;
   istextToggle?: boolean;
   customText?: string;
+  allPoses?: any[];
+  newFlowPose?: boolean;
 }
 
 export function PoseCardModal({
@@ -55,6 +55,8 @@ export function PoseCardModal({
   onEquipmentChange,
   ontextToggleChange,
   onCustomTextChange,
+  newFlowPose = false,
+  allPoses = [],
   currentPoseId = "",
   currentBreath = null,
   currentEquipment = null,
@@ -62,36 +64,15 @@ export function PoseCardModal({
   istextToggle = true,
   customText = "",
 }: PoseCardModalProps) {
-  const [selectedBreath, setSelectedBreath] = React.useState<string | null>(
-    currentBreath,
-  );
-  const [selectedEquipment, setSelectedEquipment] = React.useState<
-    string | null
-  >(currentEquipment);
-  const [note, setNote] = React.useState<string | null>(currentNote);
-  const [searchQuery, setSearchQuery] = React.useState<string>("");
-  const [allPoses, setAllPoses] = React.useState<
-    Array<{
-      id: string;
-      name_english: string;
-      name_german?: string | null;
-      name_sanskrit?: string | null;
-      description?: string | null;
-    }>
-  >([]);
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [activeTab, setActiveTab] = React.useState("pose");
-  const [textToggle, settextToggle] = React.useState<boolean>(istextToggle);
-  const [poseText, setPoseText] = React.useState<string>(customText);
+  const [selectedBreath, setSelectedBreath] = useState(currentBreath);
+  const [selectedEquipment, setSelectedEquipment] = useState(currentEquipment);
+  const [note, setNote] = useState(currentNote);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const { getAllPoses } = usePoseManager();
-  const posesQuery = getAllPoses();
-
-  React.useEffect(() => {
-    if (isOpen && posesQuery.data) {
-      setAllPoses(posesQuery.data);
-    }
-  }, [isOpen, posesQuery.data]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("pose");
+  const [textToggle, settextToggle] = useState(istextToggle);
+  const [poseText, setPoseText] = useState(customText);
 
   // Get display name for each pose (prefer German, fallback to English)
   const getPoseName = (pose: any) => {
@@ -104,7 +85,7 @@ export function PoseCardModal({
   };
 
   // Filter poses based on search query
-  const filteredPoses = React.useMemo(() => {
+  const filteredPoses = useMemo(() => {
     if (!searchQuery.trim()) return allPoses;
 
     const query = searchQuery.toLowerCase();
@@ -316,8 +297,8 @@ export function PoseCardModal({
                       onSelectionChange={handleBreathChange}
                     >
                       <ListboxSection>
-                        <ListboxItem key="Einatmen">Einatmen</ListboxItem>
-                        <ListboxItem key="Ausatmen">Ausatmen</ListboxItem>
+                        <ListboxItem className="text-gray-500" key="Einatmen">Einatmen</ListboxItem>
+                        <ListboxItem className="text-gray-500" key="Ausatmen">Ausatmen</ListboxItem>
                       </ListboxSection>
                     </Listbox>
                   </div>
@@ -338,8 +319,8 @@ export function PoseCardModal({
                       onSelectionChange={handleEquipmentChange}
                     >
                       <ListboxSection>
-                        <ListboxItem key="Block">Block</ListboxItem>
-                        <ListboxItem key="Strap">Strap</ListboxItem>
+                        <ListboxItem className="text-gray-500" key="Block">Block</ListboxItem>
+                        <ListboxItem className="text-gray-500" key="Strap">Strap</ListboxItem>
                       </ListboxSection>
                     </Listbox>
                   </div>

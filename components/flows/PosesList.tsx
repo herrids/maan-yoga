@@ -1,17 +1,28 @@
+"use client";
+
 import { Card, CardBody, CardHeader } from "@heroui/card";
 import { Divider } from "@heroui/divider";
-import { Button } from "@heroui/button";
 import { Plus } from "lucide-react";
-
+import { trpc } from "@/utils/trpc";
 import { PoseCard } from "./PoseCard";
 import { PoseCardModal } from "./PoseCardModal";
+import { useEffect, useState } from "react";
 
 interface PosesListProps {
-  poses: any[] | null;
+  flowPoses: any[] | null;
 }
 
-export function PosesList({ poses }: PosesListProps) {
-  const poseCount = poses?.length || 0;
+export function PosesList({ flowPoses }: PosesListProps) {
+  const [allPoses, setAllPoses] = useState<any[]>([]);
+  const poseCount = flowPoses?.length || 0;
+
+  const { data: poses } = trpc.pose.getAllPoses.useQuery();
+
+  useEffect(() => {
+    if (poses) {
+      setAllPoses(poses);
+    }
+  }, [poses]);
 
   return (
     <Card>
@@ -23,26 +34,27 @@ export function PosesList({ poses }: PosesListProps) {
       </CardHeader>
       <Divider />
       <CardBody>
-        {!poses || poses.length === 0 ? (
+        {!flowPoses || flowPoses.length === 0 ? (
           <div className="flex flex-col items-center gap-4">
-            <p className="text-default-500">Keine Posen hinzugefügt.</p>
-            <div>
-              <PoseCardModal>
-                <Button color="primary" startContent={<Plus size={18} />}>
-                  Pose hinzufügen
-                </Button>
+            <p className="text-default-500">Keine Posen</p>
+            <div className="flex flex-col items-center gap-2">
+              <PoseCardModal newFlowPose={true} allPoses={allPoses}>
+                <div className="flex flex-row items-center gap-2">
+                  <Plus className="text-primary" size={16} />
+                  <span className="text-primary">Pose hinzufügen</span>
+                </div>
               </PoseCardModal>
             </div>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
-            {poses.map((pose, index) => (
+            {flowPoses.map((flowPose, index) => (
               <div key={index} className="flex flex-col">
-                <PoseCard pose={pose} />
+                <PoseCard pose={flowPose} />
               </div>
             ))}
             <div className="flex flex-col items-center justify-center">
-              <PoseCardModal>
+              <PoseCardModal allPoses={allPoses}>
                 <div
                   className="h-full min-h-[150px] w-full flex flex-col items-center justify-center border border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-primary"
                   role="button"
