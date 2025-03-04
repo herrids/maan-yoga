@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 
 import { FlowHeader } from "@/components/flows/FlowHeader";
 import { FlowDescription } from "@/components/flows/FlowDescription";
-import { PosesList } from "@/components/flows/PosesList";
+import { PosesList } from "@/components/flowPoses/FlowPosesList";
 import { getFlowById } from "@/services/flowService";
 
 export default async function FlowDetailPage({

@@ -74,18 +74,19 @@ export const flowRouter = router({
   createFlow: publicProcedure
     .input(
       z.object({
-        id: z.string().optional(),
         name: z.string().optional(),
         description: z.string().nullable().optional(),
         user_email: z.string().email(),
-        poses: z.array(flowPoseSchema).optional(),
+        //poses: z.array(flowPoseSchema).optional(),
       }),
     )
     .mutation(async ({ input }) => {
-      const { ...flowData } = input;
-
       return prisma.flow.create({
-        data: flowData,
+        data: {
+          name: input.name,
+          description: input.description,
+          user_email: input.user_email,
+        },
       });
     }),
 

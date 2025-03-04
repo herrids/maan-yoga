@@ -27,7 +27,15 @@ export const flowPoseRouter = router({
     )
     .mutation(async ({ input }) => {
       const createdFlowPose = await prisma.flowPose.create({
-        data: input,
+        data: {
+          flow_id: input.flow_id,
+          pose_id: input.pose_id,
+          breath: input.breath,
+          equipment: input.equipment,
+          text: input.text,
+          position: input.position,
+          type: input.type,
+        },
       });
 
       if (createdFlowPose.pose_id) {

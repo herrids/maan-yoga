@@ -1,3 +1,7 @@
+// ------------------------------------------------------
+// DATABASE CONFIGURATION
+// ------------------------------------------------------
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,6 +12,11 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
+// ------------------------------------------------------
+// CORE DOMAIN MODELS
+// ------------------------------------------------------
+
+// Represents a yoga flow/sequence created by a user
 model Flow {
   id          String     @id @default(uuid())
   created_at  DateTime   @default(now())
@@ -17,6 +26,7 @@ model Flow {
   flow_poses  FlowPose[]
 }
 
+// Represents a yoga pose with multilingual names
 model Pose {
   id            String     @id @default(uuid())
   created_at    DateTime   @default(now())
@@ -26,6 +36,11 @@ model Pose {
   FlowPose      FlowPose[]
 }
 
+// ------------------------------------------------------
+// RELATIONSHIP MODELS
+// ------------------------------------------------------
+
+// Junction model connecting Flows and Poses with additional attributes
 model FlowPose {
   id         String   @id @default(uuid())
   created_at DateTime @default(now())

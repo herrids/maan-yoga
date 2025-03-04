@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 import { FlowPose } from "@prisma/client";
 import { addToast } from "@heroui/toast";
 
-import { PoseCard } from "./PoseCard";
-import { PoseCardModal } from "./PoseCardModal";
+import { PoseCard } from "../flows/PoseCard";
+import { PoseCardModal } from "../flows/PoseCardModal";
 
 import { trpc } from "@/utils/trpc";
 
