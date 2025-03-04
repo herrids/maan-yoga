@@ -11,7 +11,6 @@ import superjson from "superjson";
 export const trpc = createTRPCReact<AppRouter>();
 
 export function TRPCProvider({ children }: { children: React.ReactNode }) {
-  console.log(process.env.NEXT_PUBLIC_APP_URL);
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
     trpc.createClient({

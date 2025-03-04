@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 import { FlowPose } from "@prisma/client";
 import { addToast } from "@heroui/toast";
 
-import { PoseCard } from "../flows/PoseCard";
 import { PoseCardModal } from "../flows/PoseCardModal";
+
+import { PoseCard } from "./FlowPoseCard";
 
 import { trpc } from "@/utils/trpc";
 
@@ -32,6 +33,7 @@ const emptyFlowPose = (flowId: string, position: number): FlowPose => ({
 export function PosesList({ initialFlowPoses, flowId }: PosesListProps) {
   const [allPoses, setAllPoses] = useState<any[]>([]);
   const [flowPoses, setFlowPoses] = useState<FlowPose[]>(initialFlowPoses);
+  const [openModalId, setOpenModalId] = useState<string | null>(null);
 
   const poseCount = flowPoses?.length || 0;
 
@@ -53,6 +55,7 @@ export function PosesList({ initialFlowPoses, flowId }: PosesListProps) {
   const createFlowPoseMutation = trpc.flowPose.createFlowPose.useMutation({
     onSuccess: (data) => {
       setFlowPoses([...flowPoses, data]);
+      setOpenModalId(data.id);
     },
     onError: () => {
       addToast({
@@ -88,6 +91,20 @@ export function PosesList({ initialFlowPoses, flowId }: PosesListProps) {
     deleteFlowPoseMutation.mutate({ id });
   };
 
+  const handleOpenModal = (id: string) => {
+    setOpenModalId(id);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModalId(null);
+  };
+
+  const handleAddNewFlowPose = () => {
+    const newFlowPose = emptyFlowPose(flowId, poseCount + 1);
+
+    addFlowPose(newFlowPose);
+  };
+
   return (
     <Card>
       <CardHeader className="justify-between">
@@ -102,14 +119,27 @@ export function PosesList({ initialFlowPoses, flowId }: PosesListProps) {
           {poseCount > 0 &&
             flowPoses.map((flowPose, index) => (
               <div key={index} className="flex flex-col">
+                <div
+                  className="cursor-pointer w-full h-full"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => handleOpenModal(flowPose.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      handleOpenModal(flowPose.id);
+                    }
+                  }}
+                >
+                  <PoseCard flowPose={flowPose} />
+                </div>
                 <PoseCardModal
                   allPoses={allPoses}
                   deleteFlowPose={deleteFlowPose}
                   flowPose={flowPose}
+                  isOpen={openModalId === flowPose.id}
                   updateFlowPose={updateFlowPose}
-                >
-                  <PoseCard flowPose={flowPose} />
-                </PoseCardModal>
+                  onClose={handleCloseModal}
+                />
               </div>
             ))}
           <div className="flex flex-col items-center justify-center">
@@ -117,10 +147,10 @@ export function PosesList({ initialFlowPoses, flowId }: PosesListProps) {
               className="h-full min-h-[150px] w-full flex flex-col items-center justify-center border border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-primary"
               role="button"
               tabIndex={0}
-              onClick={() => addFlowPose(emptyFlowPose(flowId, poseCount + 1))}
+              onClick={handleAddNewFlowPose}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
-                  addFlowPose(emptyFlowPose(flowId, poseCount + 1));
+                  handleAddNewFlowPose();
                 }
               }}
             >
