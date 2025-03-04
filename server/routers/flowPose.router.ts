@@ -85,4 +85,29 @@ export const flowPoseRouter = router({
         where: { id: input.id },
       });
     }),
+  // New endpoint for updating positions of multiple flow poses
+  updateFlowPosePositions: publicProcedure
+    .input(
+      z.object({
+        poses: z.array(
+          z.object({
+            id: z.string(),
+            position: z.number(),
+          }),
+        ),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      // Use a transaction to ensure all updates succeed or fail together
+      const result = await prisma.$transaction(
+        input.poses.map((pose) =>
+          prisma.flowPose.update({
+            where: { id: pose.id },
+            data: { position: pose.position },
+          }),
+        ),
+      );
+
+      return result;
+    }),
 });

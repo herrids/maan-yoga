@@ -83,7 +83,7 @@ export function PoseCard({ flowPose }: PoseCardProps) {
 
   return (
     <div
-      className={`border border-gray-100 rounded-lg cursor-pointer transition-colors hover:border-primary h-full w-full ${
+      className={`border border-gray-100 rounded-lg transition-colors hover:border-gray-400 h-full w-full ${
         flowPose.type === "text" ? "bg-default-50" : ""
       }`}
     >
