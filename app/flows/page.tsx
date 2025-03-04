@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { NewFlowButton } from "@/components/newFlowButton";
 import { FlowsList } from "@/components/flows/FlowsList";
 import { title } from "@/components/primitives";
