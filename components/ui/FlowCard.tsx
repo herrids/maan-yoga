@@ -1,6 +1,7 @@
 import { Card, CardBody, CardHeader } from "@heroui/card";
-import Link from "next/link";
 import { Flow } from "@prisma/client";
+
+import { LoadingLink } from "@/components/ui/LoadingLink";
 
 interface FlowCardProps {
   flow: Flow;
@@ -14,7 +15,11 @@ export function FlowCard({ flow }: FlowCardProps) {
   });
 
   return (
-    <Link className="block" href={`/flows/${flow.id}`}>
+    <LoadingLink
+      href={`/flows/${flow.id}`}
+      spinnerPosition="top-right"
+      spinnerSize="sm"
+    >
       <Card className="max-w-md hover:shadow-md transition-shadow duration-300 cursor-pointer">
         <CardHeader className="flex gap-3">
           <div className="flex flex-col">
@@ -28,6 +33,6 @@ export function FlowCard({ flow }: FlowCardProps) {
           <p>{flow.description || "Keine Beschreibung vorhanden."}</p>
         </CardBody>
       </Card>
-    </Link>
+    </LoadingLink>
   );
 }

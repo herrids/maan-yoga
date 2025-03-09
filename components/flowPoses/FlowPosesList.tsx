@@ -1,11 +1,11 @@
 "use client";
 
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import { Divider } from "@heroui/divider";
+import { Card, CardBody, CardHeader } from "@heroui/react";
+import { Divider } from "@heroui/react";
 import { Plus, GripVertical } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FlowPose } from "@prisma/client";
-import { addToast } from "@heroui/toast";
+import { addToast } from "@heroui/react";
 import {
   DndContext,
   closestCenter,
@@ -278,7 +278,7 @@ export function PosesList({ initialFlowPoses, flowId }: PosesListProps) {
               strategy={horizontalListSortingStrategy}
             >
               {poseCount > 0 &&
-                sortedFlowPoses.map((flowPose, index) => (
+                sortedFlowPoses.map((flowPose) => (
                   <div key={flowPose.id}>
                     <SortablePoseCard
                       flowPose={flowPose}

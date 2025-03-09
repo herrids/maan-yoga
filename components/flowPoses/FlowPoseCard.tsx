@@ -25,19 +25,19 @@ export function PoseCard({ flowPose }: PoseCardProps) {
             <>
               <div className="w-32 h-32 relative mb-4">
                 <ReactSVG
-                  src={`https://kbmjjri0rfvoollc.public.blob.vercel-storage.com/poses/${flowPose.pose_id}.svg`}
-                  beforeInjection={(svg) => {
-                    svg.setAttribute('width', '100%');
-                    svg.setAttribute('height', '100%');
-                    svg.setAttribute('class', 'fill-white');
-                  }}
-                  wrapper="div"
-                  className="w-full h-full"
                   aria-label={
                     flowPose.pose.name_german ||
                     flowPose.pose.name_english ||
                     "Yoga Pose"
                   }
+                  beforeInjection={(svg) => {
+                    svg.setAttribute("width", "100%");
+                    svg.setAttribute("height", "100%");
+                    svg.setAttribute("class", "fill-white");
+                  }}
+                  className="w-full h-full"
+                  src={`https://kbmjjri0rfvoollc.public.blob.vercel-storage.com/poses/${flowPose.pose_id}.svg`}
+                  wrapper="div"
                 />
               </div>
               <div className="flex flex-col gap-1 text-center">

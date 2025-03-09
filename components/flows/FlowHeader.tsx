@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@heroui/button";
+import { Button } from "@heroui/react";
 import { ArrowLeft, MoreVertical, Trash } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { Popover, PopoverTrigger, PopoverContent } from "@heroui/popover";
+import { Popover, PopoverTrigger, PopoverContent } from "@heroui/react";
 import { useRouter } from "next/navigation";
 
 import { ConfirmationModal } from "../modals/ConfirmationModal";

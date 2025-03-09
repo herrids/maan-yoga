@@ -1,8 +1,8 @@
 "use client";
 
-import { Card, CardBody } from "@heroui/card";
-import { Textarea } from "@heroui/input";
-import { Button } from "@heroui/button";
+import { Card, CardBody } from "@heroui/react";
+import { Textarea } from "@heroui/react";
+import { Button } from "@heroui/react";
 import { useState, useEffect } from "react";
 import { Pencil } from "lucide-react";
 

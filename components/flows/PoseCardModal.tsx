@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { Button } from "@heroui/button";
-import { Listbox, ListboxItem, ListboxSection } from "@heroui/listbox";
-import { Input } from "@heroui/input";
-import { Tabs, Tab } from "@heroui/tabs";
-import { Textarea } from "@heroui/input";
+import { Button } from "@heroui/react";
+import { Listbox, ListboxItem, ListboxSection } from "@heroui/react";
+import { Input } from "@heroui/react";
+import { Tabs, Tab } from "@heroui/react";
+import { Textarea } from "@heroui/react";
 import {
   Trash,
   NotebookTabs,
@@ -19,7 +19,7 @@ import {
   X,
 } from "lucide-react";
 import Image from "next/image";
-import { Switch } from "@heroui/switch";
+import { Switch } from "@heroui/react";
 import { FlowPose, Pose } from "@prisma/client";
 
 interface PoseCardModalProps {

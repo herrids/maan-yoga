@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Button } from "@heroui/button";
+import { Button } from "@heroui/react";
 import { Check, Pencil } from "lucide-react";
 
 import { title as titleClass } from "@/components/primitives";

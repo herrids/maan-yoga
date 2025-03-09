@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@heroui/button";
+import { Button } from "@heroui/react";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 

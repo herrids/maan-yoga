@@ -1,13 +1,13 @@
 "use client";
 
-import { Button } from "@heroui/button";
+import { Button } from "@heroui/react";
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
-} from "@heroui/modal";
+} from "@heroui/react";
 
 interface ConfirmationModalProps {
   isOpen: boolean;
