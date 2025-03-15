@@ -22,7 +22,7 @@ import Image from "next/image";
 import { Switch } from "@heroui/react";
 import { FlowPose, Pose } from "@prisma/client";
 
-interface PoseCardModalProps {
+interface FlowPoseEditProps {
   allPoses: Pose[];
   flowPose: FlowPose;
   updateFlowPose: (flowPose: FlowPose) => void;
@@ -32,16 +32,15 @@ interface PoseCardModalProps {
   onClose: () => void;
 }
 
-export function PoseCardModal({
+export function FlowPoseEdit({
   allPoses = [],
   flowPose,
   updateFlowPose,
   deleteFlowPose,
   isOpen,
   onClose,
-}: PoseCardModalProps) {
+}: FlowPoseEditProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [tempText, setTempText] = useState(flowPose.text || "");
   const [localFlowPose, setLocalFlowPose] = useState<FlowPose>(flowPose);
 
   const [activeTab, setActiveTab] = useState("pose");
@@ -85,7 +84,6 @@ export function PoseCardModal({
 
   // Reset tempText and localFlowPose when flowPose changes or modal opens
   useEffect(() => {
-    setTempText(flowPose.text || "");
     setLocalFlowPose(flowPose);
   }, [flowPose, isOpen]);
 
@@ -95,21 +93,6 @@ export function PoseCardModal({
     const newValue = keysArray.length === 0 ? null : (keysArray[0] as string);
 
     setLocalFlowPose({ ...localFlowPose, [type]: newValue });
-  };
-
-  const handleSaveText = () => {
-    if (localFlowPose.type === "text") {
-      setLocalFlowPose({
-        ...localFlowPose,
-        breath: null,
-        equipment: null,
-        pose_id: null,
-        type: "text",
-        text: tempText || null,
-      });
-    } else {
-      setLocalFlowPose({ ...localFlowPose, text: tempText || null });
-    }
   };
 
   const handleToggleChange = (isChecked: boolean) => {
@@ -185,6 +168,19 @@ export function PoseCardModal({
                   <div className="flex flex-col gap-4 mt-4">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
+                        <span
+                          className="text-sm text-gray-500 cursor-pointer"
+                          role="button"
+                          tabIndex={0}
+                          onClick={() => handleToggleChange(false)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              handleToggleChange(false);
+                            }
+                          }}
+                        >
+                          {"Text"}
+                        </span>
                         <Switch
                           color="primary"
                           endContent={<TextIcon size={18} />}
@@ -193,8 +189,18 @@ export function PoseCardModal({
                           startContent={<ImageIcon size={18} />}
                           onValueChange={handleToggleChange}
                         />
-                        <span className="text-sm text-gray-500">
-                          {localFlowPose.type === "image" ? "Image" : "Text"}
+                        <span
+                          className="text-sm text-gray-500 cursor-pointer"
+                          role="button"
+                          tabIndex={0}
+                          onClick={() => handleToggleChange(true)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              handleToggleChange(true);
+                            }
+                          }}
+                        >
+                          {"Image"}
                         </span>
                       </div>
                     </div>
@@ -268,18 +274,14 @@ export function PoseCardModal({
                         <Textarea
                           className="w-full"
                           placeholder="Enter custom pose text..."
-                          value={tempText}
-                          onChange={(e) => setTempText(e.target.value)}
+                          value={localFlowPose.text || ""}
+                          onChange={(e) =>
+                            setLocalFlowPose({
+                              ...localFlowPose,
+                              text: e.target.value,
+                            })
+                          }
                         />
-                        <div className="flex gap-2">
-                          <Button
-                            color="primary"
-                            size="sm"
-                            onPress={handleSaveText}
-                          >
-                            Save
-                          </Button>
-                        </div>
                       </div>
                     )}
                   </div>
@@ -368,18 +370,14 @@ export function PoseCardModal({
                       className="w-full"
                       minRows={2}
                       placeholder="Add notes about this pose..."
-                      value={tempText}
-                      onChange={(e) => setTempText(e.target.value)}
+                      value={localFlowPose.text || ""}
+                      onChange={(e) =>
+                        setLocalFlowPose({
+                          ...localFlowPose,
+                          text: e.target.value,
+                        })
+                      }
                     />
-                    <div className="flex gap-2">
-                      <Button
-                        color="primary"
-                        size="sm"
-                        onPress={handleSaveText}
-                      >
-                        Save
-                      </Button>
-                    </div>
                   </div>
                 </Tab>
               </Tabs>

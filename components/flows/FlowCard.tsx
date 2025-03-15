@@ -1,7 +1,7 @@
 import { Card, CardBody, CardHeader } from "@heroui/card";
 import { Flow } from "@prisma/client";
 
-import { LoadingLink } from "@/components/ui/LoadingLink";
+import { LoadingLink } from "@/components/common/LoadingLink";
 
 interface FlowCardProps {
   flow: Flow;

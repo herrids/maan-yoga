@@ -10,8 +10,8 @@ import NextLink from "next/link";
 import { Button } from "@heroui/react";
 import { User } from "@supabase/supabase-js";
 
-import Logo from "@/components/Logo";
-import Menu from "@/components/Menu";
+import Logo from "@/components/common/Logo";
+import Menu from "@/components/layout/Menu";
 
 interface NavbarProps {
   user: User;

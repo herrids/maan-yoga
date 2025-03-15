@@ -1,4 +1,4 @@
-import { FlowCard } from "@/components/ui/FlowCard";
+import { FlowCard } from "@/components/flows/FlowCard";
 
 interface FlowsListProps {
   flows: any[];

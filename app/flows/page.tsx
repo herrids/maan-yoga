@@ -1,8 +1,8 @@
 export const dynamic = "force-dynamic";
 
-import { NewFlowButton } from "@/components/newFlowButton";
+import { NewFlowButton } from "@/components/flows/newFlowButton";
 import { FlowsList } from "@/components/flows/FlowsList";
-import { title } from "@/components/primitives";
+import { title } from "@/components/common/primitives";
 import { getUserFlows } from "@/services/flowService";
 import { createClient } from "@/utils/supabase/server";
 

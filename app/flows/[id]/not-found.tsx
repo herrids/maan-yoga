@@ -2,7 +2,7 @@ import { Button } from "@heroui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
-import { title } from "@/components/primitives";
+import { title } from "@/components/common/primitives";
 
 export default function FlowNotFound() {
   return (

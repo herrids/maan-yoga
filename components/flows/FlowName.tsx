@@ -2,20 +2,21 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@heroui/react";
 import { Check, Pencil } from "lucide-react";
 
-import { title as titleClass } from "@/components/primitives";
-interface EditableNameProps {
+import { title as titleClass } from "@/components/common/primitives";
+
+interface FlowNameProps {
   value: string;
   size?: "sm" | "md" | "lg";
   className?: string;
   updateFlow: (flow: object) => void;
 }
 
-export function EditableName({
+export function FlowName({
   value,
   size = "sm",
   className = "",
   updateFlow,
-}: EditableNameProps) {
+}: FlowNameProps) {
   const [name, setName] = useState(value);
   const [isEditing, setIsEditing] = useState(false);
   const [isHovering, setIsHovering] = useState(false);

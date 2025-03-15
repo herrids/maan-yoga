@@ -1,8 +1,8 @@
 import { Link } from "@heroui/link";
 import { button as buttonStyles } from "@heroui/theme";
 
-import { title, subtitle } from "@/components/primitives";
-import Logo from "@/components/Logo";
+import { title, subtitle } from "@/components/common/primitives";
+import Logo from "@/components/common/Logo";
 import { createClient } from "@/utils/supabase/server";
 export default async function Home() {
   const supabase = await createClient();

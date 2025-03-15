@@ -8,7 +8,8 @@ import { Popover, PopoverTrigger, PopoverContent } from "@heroui/react";
 import { useRouter } from "next/navigation";
 
 import { ConfirmationModal } from "../modals/ConfirmationModal";
-import { EditableName } from "../EditableName";
+
+import { FlowName } from "./FlowName";
 
 import { trpc } from "@/utils/trpc";
 
@@ -59,7 +60,7 @@ export function FlowHeader({ id, name, formattedDate }: FlowHeaderProps) {
 
       <div className="flex justify-between items-start">
         <div>
-          <EditableName size="sm" updateFlow={updateFlow} value={name} />
+          <FlowName size="sm" updateFlow={updateFlow} value={name} />
           <p className="text-default-500">Erstellt am {formattedDate}</p>
         </div>
         <div>

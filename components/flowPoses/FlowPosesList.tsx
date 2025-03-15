@@ -26,8 +26,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-import { PoseCardModal } from "../flows/PoseCardModal";
-
+import { FlowPoseEdit } from "./FlowPoseEdit";
 import { PoseCard } from "./FlowPoseCard";
 
 import { trpc } from "@/utils/trpc";
@@ -284,7 +283,7 @@ export function PosesList({ initialFlowPoses, flowId }: PosesListProps) {
                       flowPose={flowPose}
                       onOpenModal={handleOpenModal}
                     />
-                    <PoseCardModal
+                    <FlowPoseEdit
                       allPoses={allPoses}
                       deleteFlowPose={deleteFlowPose}
                       flowPose={flowPose}
