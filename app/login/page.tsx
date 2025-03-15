@@ -73,8 +73,6 @@ export default async function LoginPage() {
     }
 
     if (data) {
-      console.log(data);
-
       return redirect(data.url);
     }
   }
