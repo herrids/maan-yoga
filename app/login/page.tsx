@@ -61,7 +61,6 @@ export default async function LoginPage() {
 
     const supabase = await createClient();
 
-    console.log(process.env.NEXT_PUBLIC_APP_URL);
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
@@ -74,6 +73,8 @@ export default async function LoginPage() {
     }
 
     if (data) {
+      console.log(data);
+
       return redirect(data.url);
     }
   }
