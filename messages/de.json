@@ -1,0 +1,23 @@
+{
+  "flows": {
+    "title": "Meine Yoga Flows",
+    "newFlow": "Neuer Flow"
+  },
+  "flowNotFound": {
+    "title": "Flow nicht gefunden",
+    "description": "Der gesuchte Yoga Flow existiert nicht oder wurde gelöscht.",
+    "backButton": "Zurück zur Übersicht"
+  },
+  "home": {
+    "title1": "Deine Praktik",
+    "title2": "Dein Weg",
+    "description": "Einfacher und intuitiver Yoga Flow Builder.",
+    "myFlows": "Meine Flows",
+    "getStarted": "Los geht's"
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "description": "Die angeforderte Seite konnte nicht gefunden werden.",
+    "backButton": "Zurück zur Startseite"
+  }
+}

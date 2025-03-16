@@ -9,9 +9,14 @@ import { trpc } from "@/utils/trpc";
 interface NewFlowButtonProps {
   userEmail: string;
   flowCount: number;
+  newFlowLabel: string;
 }
 
-export function NewFlowButton({ userEmail, flowCount }: NewFlowButtonProps) {
+export function NewFlowButton({
+  userEmail,
+  flowCount,
+  newFlowLabel,
+}: NewFlowButtonProps) {
   const router = useRouter();
   const createFlowMutation = trpc.flow.createFlow.useMutation({
     onSuccess: (data) => {
@@ -33,7 +38,7 @@ export function NewFlowButton({ userEmail, flowCount }: NewFlowButtonProps) {
       startContent={<Plus size={20} />}
       onPress={handleCreateFlow}
     >
-      Flow erstellen
+      {newFlowLabel}
     </Button>
   );
 }

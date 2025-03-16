@@ -169,7 +169,11 @@ export function FlowPoseEdit({
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
                         <span
-                          className="text-sm text-gray-500 cursor-pointer"
+                          className={`text-sm cursor-pointer ${
+                            localFlowPose.type === "text"
+                              ? "text-gray-500"
+                              : "text-gray-300"
+                          }`}
                           role="button"
                           tabIndex={0}
                           onClick={() => handleToggleChange(false)}
@@ -190,7 +194,11 @@ export function FlowPoseEdit({
                           onValueChange={handleToggleChange}
                         />
                         <span
-                          className="text-sm text-gray-500 cursor-pointer"
+                          className={`text-sm cursor-pointer ${
+                            localFlowPose.type === "image"
+                              ? "text-gray-500"
+                              : "text-gray-300"
+                          }`}
                           role="button"
                           tabIndex={0}
                           onClick={() => handleToggleChange(true)}

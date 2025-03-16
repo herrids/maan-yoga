@@ -1,0 +1,23 @@
+{
+  "flows": {
+    "title": "My Yoga Flows",
+    "newFlow": "New Flow"
+  },
+  "flowNotFound": {
+    "title": "Flow not found",
+    "description": "The requested yoga flow does not exist or has been deleted.",
+    "backButton": "Back to overview"
+  },
+  "home": {
+    "title1": "Your Practice",
+    "title2": "Your Path",
+    "description": "Simple and intuitive yoga flow builder.",
+    "myFlows": "My Flows",
+    "getStarted": "Get Started"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The requested page could not be found.",
+    "backButton": "Back to home"
+  }
+}

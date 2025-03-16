@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 
-import { LoginForm } from "../../components/login/LoginForm";
+import { LoginForm } from "../../../components/login/LoginForm";
 
 import { createClient } from "@/utils/supabase/server";
 

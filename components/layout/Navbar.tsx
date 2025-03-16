@@ -31,7 +31,7 @@ export const Navbar = ({ user }: NavbarProps) => {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent as="div" justify="end">
+      <NavbarContent as="div" className="gap-4" justify="end">
         {user ? (
           <Menu />
         ) : (
