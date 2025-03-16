@@ -19,5 +19,21 @@
     "title": "Page not found",
     "description": "The requested page could not be found.",
     "backButton": "Back to home"
+  },
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "orContinueWith": "Or continue with",
+    "signInWithGoogle": "Sign in with Google",
+    "noAccount": "No account?",
+    "signUp": "Sign up",
+    "signIn": "Sign in",
+    "emailPlaceholder": "Enter your email",
+    "passwordPlaceholder": "Enter your password"
+  },
+  "flowPoses": {
+    "clickToEdit": "Click to edit",
+    "equipment": "Equipment"
   }
 }

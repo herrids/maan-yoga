@@ -3,6 +3,7 @@
 import { Card } from "@heroui/react";
 import { Input } from "@heroui/react";
 import { Button } from "@heroui/react";
+import { useTranslations } from "next-intl";
 
 interface LoginFormProps {
   signInAction: (formData: FormData) => Promise<void>;
@@ -15,39 +16,41 @@ export function LoginForm({
   signUpAction,
   signInWithGoogleAction,
 }: LoginFormProps) {
+  const t = useTranslations();
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Card className="w-full max-w-md p-8">
         <div className="mb-8">
           <h2 className="text-center text-3xl font-bold tracking-tight">
-            Sign in to your account
+            {t("login.title")}
           </h2>
         </div>
         <form action={signInAction} className="space-y-6">
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium" htmlFor="email">
-                Email address
+                {t("login.email")}
               </label>
               <Input
                 required
                 className="mt-1 block w-full"
                 id="email"
                 name="email"
-                placeholder="Enter your email"
+                placeholder={t("login.emailPlaceholder")}
                 type="email"
               />
             </div>
             <div>
               <label className="block text-sm font-medium" htmlFor="password">
-                Password
+                {t("login.password")}
               </label>
               <Input
                 required
                 className="mt-1 block w-full"
                 id="password"
                 name="password"
-                placeholder="Enter your password"
+                placeholder={t("login.passwordPlaceholder")}
                 type="password"
               />
             </div>
@@ -55,7 +58,7 @@ export function LoginForm({
 
           <div>
             <Button className="w-full" type="submit">
-              Sign in
+              {t("login.signIn")}
             </Button>
           </div>
         </form>
@@ -67,7 +70,7 @@ export function LoginForm({
             </div>
             <div className="relative flex justify-center text-sm">
               <span className="bg-white px-2 text-gray-500">
-                Or continue with
+                {t("login.orContinueWith")}
               </span>
             </div>
           </div>
@@ -97,14 +100,14 @@ export function LoginForm({
                   fill="#EA4335"
                 />
               </svg>
-              Sign in with Google
+              {t("login.signInWithGoogle")}
             </Button>
           </div>
         </div>
 
         <div className="mt-6 text-center">
           <p className="text-sm">
-            Don&apos;t have an account?
+            {t("login.noAccount")}
             <br />
             <Button
               className="font-medium"
@@ -112,7 +115,7 @@ export function LoginForm({
               type="submit"
               variant="ghost"
             >
-              Sign up
+              {t("login.signUp")}
             </Button>
           </p>
         </div>

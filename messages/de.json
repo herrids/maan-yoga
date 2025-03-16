@@ -9,7 +9,7 @@
     "backButton": "Zurück zur Übersicht"
   },
   "home": {
-    "title1": "Deine Praktik",
+    "title1": "Deine Yoga Praxis,",
     "title2": "Dein Weg",
     "description": "Einfacher und intuitiver Yoga Flow Builder.",
     "myFlows": "Meine Flows",
@@ -19,5 +19,21 @@
     "title": "Seite nicht gefunden",
     "description": "Die angeforderte Seite konnte nicht gefunden werden.",
     "backButton": "Zurück zur Startseite"
+  },
+  "login": {
+    "title": "Anmelden",
+    "email": "Email",
+    "password": "Passwort",
+    "orContinueWith": "Oder fortfahren mit",
+    "signInWithGoogle": "Mit Google anmelden",
+    "noAccount": "Noch kein Konto?",
+    "signUp": "Registrieren",
+    "signIn": "Anmelden",
+    "emailPlaceholder": "Email eingeben",
+    "passwordPlaceholder": "Passwort eingeben"
+  },
+  "flowPoses": {
+    "clickToEdit": "Klicken zum Bearbeiten",
+    "equipment": "Hilfsmittel"
   }
 }
