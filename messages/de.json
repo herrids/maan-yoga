@@ -1,12 +1,18 @@
 {
   "flows": {
     "title": "Meine Yoga Flows",
-    "newFlow": "Neuer Flow"
-  },
-  "flowNotFound": {
-    "title": "Flow nicht gefunden",
-    "description": "Der gesuchte Yoga Flow existiert nicht oder wurde gelöscht.",
-    "backButton": "Zurück zur Übersicht"
+    "newFlow": "Neuer Flow",
+    "backButton": "Zurück zur Übersicht",
+    "createdAt": "Erstellt am",
+    "moreOptions": "Mehr Optionen",
+    "delete": "Löschen",
+    "cancel": "Abbrechen",
+    "deleteFlow": "Flow löschen",
+    "deleteFlowConfirmation": "Bist du sicher, dass du {name} löschen möchtest?",
+    "descriptionPlaceholder": "Beschreibung eingeben",
+    "save": "Speichern",
+    "noDescription": "Keine Beschreibung vorhanden",
+    "editDescription": "Beschreibung bearbeiten"
   },
   "home": {
     "title1": "Deine Yoga Praxis,",
@@ -18,7 +24,12 @@
   "notFound": {
     "title": "Seite nicht gefunden",
     "description": "Die angeforderte Seite konnte nicht gefunden werden.",
-    "backButton": "Zurück zur Startseite"
+    "backButton": "Zurück zur Startseite",
+    "flowNotFound": {
+      "title": "Flow nicht gefunden",
+      "description": "Der gesuchte Yoga Flow existiert nicht oder wurde gelöscht.",
+      "backButton": "Zurück zur Übersicht"
+    }
   },
   "login": {
     "title": "Anmelden",
@@ -34,6 +45,36 @@
   },
   "flowPoses": {
     "clickToEdit": "Klicken zum Bearbeiten",
-    "equipment": "Hilfsmittel"
+    "equipment": "Hilfsmittel",
+    "dragToReorder": "Ziehen zum Neuanordnen",
+    "errorUpdatingPose": "Fehler beim Aktualisieren der Pose",
+    "pleaseTryAgain": "Bitte versuche es erneut.",
+    "errorCreatingPose": "Fehler beim Erstellen der Pose",
+    "addPose": "Pose hinzufügen",
+    "errorUpdatingPositions": "Fehler beim Aktualisieren der Positionen",
+    "pose": "Pose",
+    "poses": "Posen",
+    "edit": {
+      "modifyPose": "Pose bearbeiten",
+      "poseOptions": "Pose Optionen",
+      "text": "Text",
+      "image": "Bild",
+      "searchPoses": "Posen suchen...",
+      "noPosesFound": "Keine Posen gefunden",
+      "showLessPoses": "Weniger Posen anzeigen",
+      "showAllPoses": "Alle Posen anzeigen",
+      "breathInstructions": "Atmung",
+      "details": "Details",
+      "inhale": "Einatmen",
+      "exhale": "Ausatmen",
+      "equipment": "Hilfsmittel",
+      "block": "Block",
+      "strap": "Band",
+      "notes": "Notizen",
+      "addNotesPlaceholder": "Notizen hinzufügen...",
+      "addNotes": "Notizen hinzufügen",
+      "deletePose": "Pose löschen",
+      "save": "Speichern"
+    }
   }
 }

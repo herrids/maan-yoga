@@ -4,6 +4,7 @@ import { Card, CardBody, CardHeader } from "@heroui/react";
 import { Divider } from "@heroui/react";
 import { Plus, GripVertical } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { FlowPose } from "@prisma/client";
 import { addToast } from "@heroui/react";
 import {
@@ -72,6 +73,8 @@ function SortablePoseCard({
     opacity: isDragging ? 0.8 : 1,
   };
 
+  const t = useTranslations("flowPoses");
+
   // Separate the drag handle from the clickable content
   return (
     <div
@@ -85,7 +88,7 @@ function SortablePoseCard({
         style={{ opacity: isDragging ? 1 : undefined }}
         {...attributes}
         {...listeners}
-        title="Drag to reorder"
+        title={t("dragToReorder")}
       >
         <GripVertical className="text-gray-500" size={16} />
       </div>
@@ -112,14 +115,14 @@ function SortablePoseCard({
   );
 }
 
-export function PosesList({ initialFlowPoses, flowId }: PosesListProps) {
+export function FlowPosesList({ initialFlowPoses, flowId }: PosesListProps) {
   const [allPoses, setAllPoses] = useState<any[]>([]);
   const [flowPoses, setFlowPoses] = useState<FlowPose[]>(initialFlowPoses);
   const [openModalId, setOpenModalId] = useState<string | null>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const poseCount = flowPoses?.length || 0;
-
+  const t = useTranslations("flowPoses");
   // Set up sensors for drag and drop
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -137,8 +140,8 @@ export function PosesList({ initialFlowPoses, flowId }: PosesListProps) {
     },
     onError: () => {
       addToast({
-        title: "Fehler beim Aktualisieren der Pose",
-        description: "Bitte versuche es erneut.",
+        title: t("errorUpdatingPose"),
+        description: t("pleaseTryAgain"),
         color: "danger",
       });
     },
@@ -150,8 +153,8 @@ export function PosesList({ initialFlowPoses, flowId }: PosesListProps) {
     },
     onError: () => {
       addToast({
-        title: "Fehler beim Erstellen der Pose",
-        description: "Bitte versuche es erneut.",
+        title: t("errorCreatingPose"),
+        description: t("pleaseTryAgain"),
         color: "danger",
       });
     },
@@ -161,8 +164,8 @@ export function PosesList({ initialFlowPoses, flowId }: PosesListProps) {
     trpc.flowPose.updateFlowPosePositions.useMutation({
       onError: () => {
         addToast({
-          title: "Fehler beim Aktualisieren der Positionen",
-          description: "Bitte versuche es erneut.",
+          title: t("errorUpdatingPositions"),
+          description: t("pleaseTryAgain"),
           color: "danger",
         });
       },
@@ -258,9 +261,9 @@ export function PosesList({ initialFlowPoses, flowId }: PosesListProps) {
   return (
     <Card>
       <CardHeader className="justify-between">
-        <h2 className="text-xl font-semibold">Posen</h2>
+        <h2 className="text-xl font-semibold">{t("poses")}</h2>
         <p className="text-default-500 text-right">
-          {poseCount} {poseCount === 1 ? "Pose" : "Posen"}
+          {poseCount} {poseCount === 1 ? t("pose") : t("poses")}
         </p>
       </CardHeader>
       <Divider />
@@ -307,7 +310,7 @@ export function PosesList({ initialFlowPoses, flowId }: PosesListProps) {
                 }}
               >
                 <Plus className="text-gray-400" size={24} />
-                <span className="mt-2 text-default-500">Pose hinzufügen</span>
+                <span className="mt-2 text-default-500">{t("addPose")}</span>
               </div>
             </div>
           </div>

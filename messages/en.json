@@ -1,12 +1,18 @@
 {
   "flows": {
     "title": "My Yoga Flows",
-    "newFlow": "New Flow"
-  },
-  "flowNotFound": {
-    "title": "Flow not found",
-    "description": "The requested yoga flow does not exist or has been deleted.",
-    "backButton": "Back to overview"
+    "newFlow": "New Flow",
+    "backButton": "Back to overview",
+    "createdAt": "Created at",
+    "moreOptions": "More options",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "deleteFlow": "Delete Flow",
+    "deleteFlowConfirmation": "Are you sure you want to delete the flow {name}?",
+    "descriptionPlaceholder": "Enter your description",
+    "save": "Save",
+    "noDescription": "No description available",
+    "editDescription": "Edit description"
   },
   "home": {
     "title1": "Your Practice",
@@ -18,7 +24,12 @@
   "notFound": {
     "title": "Page not found",
     "description": "The requested page could not be found.",
-    "backButton": "Back to home"
+    "backButton": "Back to home",
+    "flowNotFound": {
+      "title": "Flow not found",
+      "description": "The requested yoga flow does not exist or has been deleted.",
+      "backButton": "Back to overview"
+    }
   },
   "login": {
     "title": "Login",
@@ -34,6 +45,36 @@
   },
   "flowPoses": {
     "clickToEdit": "Click to edit",
-    "equipment": "Equipment"
+    "equipment": "Equipment",
+    "dragToReorder": "Drag to reorder",
+    "errorUpdatingPose": "Error updating pose",
+    "pleaseTryAgain": "Please try again",
+    "errorCreatingPose": "Error creating pose",
+    "addPose": "Add pose",
+    "errorUpdatingPositions": "Error updating positions",
+    "pose": "Pose",
+    "poses": "Poses",
+    "edit": {
+      "modifyPose": "Modify Pose",
+      "poseOptions": "Pose options",
+      "text": "Text",
+      "image": "Image",
+      "searchPoses": "Search poses...",
+      "noPosesFound": "No poses found",
+      "showLessPoses": "Show less poses",
+      "showAllPoses": "Show all poses",
+      "breathInstructions": "Breath instructions",
+      "details": "Details",
+      "inhale": "Inhale",
+      "exhale": "Exhale",
+      "equipment": "Equipment",
+      "block": "Block",
+      "strap": "Strap",
+      "notes": "Notes",
+      "addNotesPlaceholder": "Add notes about this pose...",
+      "addNotes": "Add notes",
+      "deletePose": "Delete pose",
+      "save": "Save"
+    }
   }
 }

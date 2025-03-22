@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Popover, PopoverTrigger, PopoverContent } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import { ConfirmationModal } from "../modals/ConfirmationModal";
 
@@ -21,6 +22,7 @@ interface FlowHeaderProps {
 
 export function FlowHeader({ id, name, formattedDate }: FlowHeaderProps) {
   const router = useRouter();
+  const t = useTranslations("flows");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const flowUpdateMutation = trpc.flow.updateFlow.useMutation();
@@ -54,14 +56,16 @@ export function FlowHeader({ id, name, formattedDate }: FlowHeaderProps) {
           startContent={<ArrowLeft size={18} />}
           variant="light"
         >
-          Zurück zur Übersicht
+          {t("backButton")}
         </Button>
       </div>
 
       <div className="flex justify-between items-start">
         <div>
           <FlowName size="sm" updateFlow={updateFlow} value={name} />
-          <p className="text-default-500">Erstellt am {formattedDate}</p>
+          <p className="text-default-500">
+            {t("createdAt")} {formattedDate}
+          </p>
         </div>
         <div>
           <Popover
@@ -70,7 +74,7 @@ export function FlowHeader({ id, name, formattedDate }: FlowHeaderProps) {
             onOpenChange={setIsPopoverOpen}
           >
             <PopoverTrigger>
-              <Button isIconOnly aria-label="More options" variant="light">
+              <Button isIconOnly aria-label={t("moreOptions")} variant="light">
                 <MoreVertical size={20} />
               </Button>
             </PopoverTrigger>
@@ -83,7 +87,7 @@ export function FlowHeader({ id, name, formattedDate }: FlowHeaderProps) {
                   variant="light"
                   onPress={handleDeleteClick}
                 >
-                  Löschen
+                  {t("delete")}
                 </Button>
               </div>
             </PopoverContent>
@@ -93,12 +97,12 @@ export function FlowHeader({ id, name, formattedDate }: FlowHeaderProps) {
 
       {/* Delete Confirmation Modal */}
       <ConfirmationModal
-        cancelLabel="Abbrechen"
+        cancelLabel={t("cancel")}
         confirmColor="danger"
-        confirmLabel="Löschen"
-        content={`Bist du sicher, dass du "${name}" löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.`}
+        confirmLabel={t("deleteFlow")}
+        content={t("deleteFlowConfirmation", { name })}
         isOpen={isDeleteModalOpen}
-        title="Flow löschen"
+        title={t("deleteFlow")}
         onConfirm={handleConfirmDelete}
         onOpenChange={setIsDeleteModalOpen}
       />

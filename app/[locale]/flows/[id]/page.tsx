@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 
 import { FlowHeader } from "@/components/flows/FlowHeader";
 import { FlowDescription } from "@/components/flows/FlowDescription";
-import { PosesList } from "@/components/flowPoses/FlowPosesList";
+import { FlowPosesList } from "@/components/flowPoses/FlowPosesList";
 import { getFlowById } from "@/services/flowService";
 
 export default async function FlowDetailPage({
@@ -35,7 +35,7 @@ export default async function FlowDetailPage({
 
       <div className="flex flex-col gap-8 mt-8">
         <FlowDescription id={flow.id} value={flow.description} />
-        <PosesList flowId={flow.id} initialFlowPoses={flow.poses} />
+        <FlowPosesList flowId={flow.id} initialFlowPoses={flow.poses} />
       </div>
     </div>
   );

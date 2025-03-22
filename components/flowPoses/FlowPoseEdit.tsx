@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import { Button } from "@heroui/react";
 import { Listbox, ListboxItem, ListboxSection } from "@heroui/react";
 import { Input } from "@heroui/react";
@@ -40,6 +41,8 @@ export function FlowPoseEdit({
   isOpen,
   onClose,
 }: FlowPoseEditProps) {
+  const t = useTranslations("flowPoses");
+  const locale = useLocale();
   const [searchQuery, setSearchQuery] = useState("");
   const [localFlowPose, setLocalFlowPose] = useState<FlowPose>(flowPose);
 
@@ -135,7 +138,7 @@ export function FlowPoseEdit({
           <div className="bg-white rounded-lg shadow-lg w-full max-w-md z-10 max-h-[90vh] overflow-auto">
             <div className="flex flex-col gap-1 p-4 border-b">
               <div className="flex justify-between items-center">
-                <h3 className="text-lg font-medium">Modify Pose</h3>
+                <h3 className="text-lg font-medium">{t("edit.modifyPose")}</h3>
                 <button
                   className="p-1 rounded-full hover:bg-gray-100"
                   onClick={onClose}
@@ -146,7 +149,7 @@ export function FlowPoseEdit({
             </div>
             <div className="p-4">
               <Tabs
-                aria-label="Pose options"
+                aria-label={t("edit.poseOptions")}
                 className="w-full"
                 classNames={{
                   tabList: "w-full grid grid-cols-3 gap-2",
@@ -161,7 +164,7 @@ export function FlowPoseEdit({
                   title={
                     <div className="flex items-center gap-2">
                       <Edit size={16} />
-                      <span>Pose</span>
+                      <span>{t("pose")}</span>
                     </div>
                   }
                 >
@@ -183,7 +186,7 @@ export function FlowPoseEdit({
                             }
                           }}
                         >
-                          {"Text"}
+                          {t("edit.text")}
                         </span>
                         <Switch
                           color="primary"
@@ -208,7 +211,7 @@ export function FlowPoseEdit({
                             }
                           }}
                         >
-                          {"Image"}
+                          {t("edit.image")}
                         </span>
                       </div>
                     </div>
@@ -217,7 +220,7 @@ export function FlowPoseEdit({
                       <div className="flex flex-col gap-2">
                         <Input
                           className="w-full"
-                          placeholder="Search poses..."
+                          placeholder={t("edit.searchPoses")}
                           startContent={
                             <Search className="text-gray-400" size={16} />
                           }
@@ -243,20 +246,22 @@ export function FlowPoseEdit({
                                 <div className="w-full aspect-square bg-gray-100 rounded-md overflow-hidden relative">
                                   <Image
                                     fill
-                                    alt={pose.name_german || pose.name_english}
+                                    alt={pose.name_english}
                                     className="object-contain"
                                     src={`https://kbmjjri0rfvoollc.public.blob.vercel-storage.com/poses/${pose.id}.svg`}
                                   />
                                 </div>
                                 <span className="text-xs mt-1 text-center truncate w-full">
-                                  {pose.name_german || pose.name_english}
+                                  {locale === "de"
+                                    ? pose.name_german
+                                    : pose.name_english}
                                 </span>
                               </div>
                             ))}
                           </div>
                         ) : (
                           <p className="text-sm text-gray-500 mt-2">
-                            No poses found
+                            {t("edit.noPosesFound")}
                           </p>
                         )}
                         <div className="flex justify-center">
@@ -272,8 +277,8 @@ export function FlowPoseEdit({
                             }}
                           >
                             {isShowingAllPoses
-                              ? "Zeige weniger Posen"
-                              : "Alle Posen anzeigen"}
+                              ? t("edit.showLessPoses")
+                              : t("edit.showAllPoses")}
                           </span>
                         </div>
                       </div>
@@ -299,7 +304,7 @@ export function FlowPoseEdit({
                   title={
                     <div className="flex items-center gap-2">
                       <NotebookTabs size={16} />
-                      <span>Details</span>
+                      <span>{t("edit.details")}</span>
                     </div>
                   }
                 >
@@ -307,7 +312,7 @@ export function FlowPoseEdit({
                     <div className="flex flex-col gap-2 sm:flex-1">
                       <h4 className="text-sm font-medium flex items-center gap-1">
                         <Wind size={16} />
-                        Breath Instructions
+                        {t("edit.breathInstructions")}
                       </h4>
                       <Listbox
                         aria-label="Select Breath"
@@ -323,10 +328,10 @@ export function FlowPoseEdit({
                       >
                         <ListboxSection>
                           <ListboxItem key="Einatmen" className="text-gray-500">
-                            Einatmen
+                            {t("edit.inhale")}
                           </ListboxItem>
                           <ListboxItem key="Ausatmen" className="text-gray-500">
-                            Ausatmen
+                            {t("edit.exhale")}
                           </ListboxItem>
                         </ListboxSection>
                       </Listbox>
@@ -335,7 +340,7 @@ export function FlowPoseEdit({
                     <div className="flex flex-col gap-2 sm:flex-1">
                       <h4 className="text-sm font-medium flex items-center gap-1">
                         <Dumbbell size={16} />
-                        Equipment
+                        {t("edit.equipment")}
                       </h4>
                       <Listbox
                         aria-label="Select Equipment"
@@ -353,10 +358,10 @@ export function FlowPoseEdit({
                       >
                         <ListboxSection>
                           <ListboxItem key="Block" className="text-gray-500">
-                            Block
+                            {t("edit.block")}
                           </ListboxItem>
                           <ListboxItem key="Strap" className="text-gray-500">
-                            Strap
+                            {t("edit.strap")}
                           </ListboxItem>
                         </ListboxSection>
                       </Listbox>
@@ -368,16 +373,18 @@ export function FlowPoseEdit({
                   title={
                     <div className="flex items-center gap-2">
                       <FileText size={16} />
-                      <span>Notes</span>
+                      <span>{t("edit.notes")}</span>
                     </div>
                   }
                 >
                   <div className="flex flex-col gap-2 mt-4">
-                    <h4 className="text-sm font-medium">Add Notes</h4>
+                    <h4 className="text-sm font-medium">
+                      {t("edit.addNotes")}
+                    </h4>
                     <Textarea
                       className="w-full"
                       minRows={2}
-                      placeholder="Add notes about this pose..."
+                      placeholder={t("edit.addNotesPlaceholder")}
                       value={localFlowPose.text || ""}
                       onChange={(e) =>
                         setLocalFlowPose({
@@ -398,10 +405,10 @@ export function FlowPoseEdit({
                 variant="light"
                 onPress={handleDeleteFlowPose}
               >
-                Delete Pose
+                {t("edit.deletePose")}
               </Button>
               <Button color="primary" size="sm" onPress={handleSaveAndClose}>
-                Save
+                {t("edit.save")}
               </Button>
             </div>
           </div>

@@ -1,18 +1,20 @@
 "use client";
 
 import { ReactSVG } from "react-svg";
+import { useTranslations } from "next-intl";
 
 interface PoseCardProps {
   flowPose: any;
 }
 
 export function PoseCard({ flowPose }: PoseCardProps) {
+  const t = useTranslations("flowPoses");
   const renderCardContent = () => {
     if (flowPose.pose_id == null && flowPose.text == null) {
       return (
         <div className="p-4 h-full w-full flex items-center justify-center">
           <p className="text-sm text-default-400 text-center">
-            Klicken zum Bearbeiten
+            {t("clickToEdit")}
           </p>
         </div>
       );
@@ -55,7 +57,7 @@ export function PoseCard({ flowPose }: PoseCardProps) {
 
                 {flowPose.equipment && (
                   <p className="text-sm text-default-600">
-                    <span className="font-medium">Hilfsmittel: </span>
+                    <span className="font-medium">{t("equipment")}: </span>
                     {flowPose.equipment}
                   </p>
                 )}
