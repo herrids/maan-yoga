@@ -4,29 +4,79 @@ import { Card } from "@heroui/react";
 import { Input } from "@heroui/react";
 import { Button } from "@heroui/react";
 import { useTranslations } from "next-intl";
+import { useSearchParams, useRouter } from "next/navigation";
+import { addToast } from "@heroui/react";
 
-interface LoginFormProps {
-  signInAction: (formData: FormData) => Promise<void>;
-  signUpAction: (formData: FormData) => Promise<void>;
-  signInWithGoogleAction: () => Promise<void>;
-}
-
-export function LoginForm({
-  signInAction,
-  signUpAction,
-  signInWithGoogleAction,
-}: LoginFormProps) {
+export function LoginForm() {
   const t = useTranslations();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const error = searchParams.get("error");
+  const message = searchParams.get("message");
+
+  const signInHandler = async (formData: FormData) => {
+    try {
+      const response = await fetch("/api/auth/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.get("email"),
+          password: formData.get("password"),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to sign in");
+      }
+
+      router.push("/");
+      router.refresh();
+    } catch (error) {
+      addToast({
+        title: t("login.errorSignIn"),
+        description:
+          error instanceof Error ? error.message : "An error occurred",
+        color: "danger",
+      });
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      const response = await fetch("/api/auth/google");
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to initiate Google sign in");
+      }
+
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (error) {
+      addToast({
+        title: t("login.errorSignIn"),
+        description:
+          error instanceof Error ? error.message : "An error occurred",
+        color: "danger",
+      });
+    }
+  };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <div className="flex min-h-screen flex-col items-center py-2">
+      {message && <div className="mb-4 text-sm text-green-600">{message}</div>}
       <Card className="w-full max-w-md p-8">
         <div className="mb-8">
           <h2 className="text-center text-3xl font-bold tracking-tight">
             {t("login.title")}
           </h2>
         </div>
-        <form action={signInAction} className="space-y-6">
+        <form action={signInHandler} className="space-y-6">
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium" htmlFor="email">
@@ -56,6 +106,8 @@ export function LoginForm({
             </div>
           </div>
 
+          {error && <div className="text-sm text-red-600">{error}</div>}
+
           <div>
             <Button className="w-full" type="submit">
               {t("login.signIn")}
@@ -80,7 +132,7 @@ export function LoginForm({
               className="w-full flex items-center justify-center gap-2"
               type="button"
               variant="bordered"
-              onPress={signInWithGoogleAction}
+              onPress={handleGoogleSignIn}
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24">
                 <path
@@ -110,10 +162,10 @@ export function LoginForm({
             {t("login.noAccount")}
             <br />
             <Button
+              as="a"
               className="font-medium"
-              formAction={signUpAction}
-              type="submit"
-              variant="ghost"
+              href="/signup"
+              variant="light"
             >
               {t("login.signUp")}
             </Button>

@@ -2,11 +2,18 @@
 
 import { redirect } from "next/navigation";
 
-import { LoginForm } from "../../../components/login/LoginForm";
-
+import { LoginForm } from "@/components/auth/LoginForm";
 import { createClient } from "@/utils/supabase/server";
+import { ToastHandler } from "@/components/common/ToastHandler";
 
-export default async function LoginPage() {
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    error?: string;
+    message?: string;
+  }>;
+}) {
   const supabase = await createClient();
   const {
     data: { user },
@@ -16,72 +23,28 @@ export default async function LoginPage() {
     return redirect("/");
   }
 
-  async function signIn(formData: FormData) {
-    "use server";
-
-    const supabase = await createClient();
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      return redirect("/login?error=Invalid credentials");
-    }
-
-    return redirect("/");
-  }
-
-  async function signUp(formData: FormData) {
-    "use server";
-    const supabase = await createClient();
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
-      },
-    });
-
-    if (error) {
-      return redirect("/login?error=Could not sign up");
-    }
-
-    return redirect("/login?message=Check email to continue sign in process");
-  }
-
-  async function signInWithGoogle() {
-    "use server";
-
-    const supabase = await createClient();
-
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
-      },
-    });
-
-    if (error) {
-      return redirect("/login?error=Could not sign in with Google");
-    }
-
-    if (data) {
-      return redirect(data.url);
-    }
-  }
+  const error = (await searchParams).error;
+  const message = (await searchParams).message;
 
   return (
-    <LoginForm
-      signInAction={signIn}
-      signInWithGoogleAction={signInWithGoogle}
-      signUpAction={signUp}
-    />
+    <>
+      {error && (
+        <ToastHandler
+          message={error}
+          placement="top-right"
+          title="Error"
+          type="error"
+        />
+      )}
+      {message && (
+        <ToastHandler
+          message={message}
+          placement="top-right"
+          title="Success"
+          type="success"
+        />
+      )}
+      <LoginForm />
+    </>
   );
 }

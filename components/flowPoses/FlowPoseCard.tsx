@@ -1,7 +1,8 @@
 "use client";
 
-import { ReactSVG } from "react-svg";
 import { useTranslations } from "next-intl";
+
+import PoseImage from "@/components/common/PoseImage";
 
 interface PoseCardProps {
   flowPose: any;
@@ -26,20 +27,13 @@ export function PoseCard({ flowPose }: PoseCardProps) {
           {flowPose.pose && flowPose.pose.id && (
             <>
               <div className="w-32 h-32 relative mb-4">
-                <ReactSVG
-                  aria-label={
+                <PoseImage
+                  name={
                     flowPose.pose.name_german ||
                     flowPose.pose.name_english ||
                     "Yoga Pose"
                   }
-                  beforeInjection={(svg) => {
-                    svg.setAttribute("width", "100%");
-                    svg.setAttribute("height", "100%");
-                    svg.setAttribute("class", "fill-white");
-                  }}
-                  className="w-full h-full"
-                  src={`https://kbmjjri0rfvoollc.public.blob.vercel-storage.com/poses/${flowPose.pose_id}.svg`}
-                  wrapper="div"
+                  poseId={flowPose.pose.id}
                 />
               </div>
               <div className="flex flex-col gap-1 text-center">

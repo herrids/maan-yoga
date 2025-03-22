@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Button } from "@heroui/react";
+import { Button, Card, CardBody, CardHeader, CardFooter } from "@heroui/react";
 import { Listbox, ListboxItem, ListboxSection } from "@heroui/react";
 import { Input } from "@heroui/react";
 import { Tabs, Tab } from "@heroui/react";
@@ -19,9 +19,10 @@ import {
   Type as TextIcon,
   X,
 } from "lucide-react";
-import Image from "next/image";
 import { Switch } from "@heroui/react";
 import { FlowPose, Pose } from "@prisma/client";
+
+import PoseImage from "../common/PoseImage";
 
 interface FlowPoseEditProps {
   allPoses: Pose[];
@@ -135,10 +136,12 @@ export function FlowPoseEdit({
               }
             }}
           />
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-md z-10 max-h-[90vh] overflow-auto">
-            <div className="flex flex-col gap-1 p-4 border-b">
-              <div className="flex justify-between items-center">
+          <Card className="rounded-lg shadow-lg w-full max-w-md z-10 max-h-[90vh] overflow-auto">
+            <CardHeader className="justify-between">
+              <div>
                 <h3 className="text-lg font-medium">{t("edit.modifyPose")}</h3>
+              </div>
+              <div>
                 <button
                   className="p-1 rounded-full hover:bg-gray-100"
                   onClick={onClose}
@@ -146,8 +149,8 @@ export function FlowPoseEdit({
                   <X size={18} />
                 </button>
               </div>
-            </div>
-            <div className="p-4">
+            </CardHeader>
+            <CardBody>
               <Tabs
                 aria-label={t("edit.poseOptions")}
                 className="w-full"
@@ -243,12 +246,14 @@ export function FlowPoseEdit({
                                   }
                                 }}
                               >
-                                <div className="w-full aspect-square bg-gray-100 rounded-md overflow-hidden relative">
-                                  <Image
-                                    fill
-                                    alt={pose.name_english}
-                                    className="object-contain"
-                                    src={`https://kbmjjri0rfvoollc.public.blob.vercel-storage.com/poses/${pose.id}.svg`}
+                                <div className="w-full aspect-square bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden relative">
+                                  <PoseImage
+                                    name={
+                                      pose.name_german ||
+                                      pose.name_english ||
+                                      "Yoga Pose"
+                                    }
+                                    poseId={pose.id}
                                   />
                                 </div>
                                 <span className="text-xs mt-1 text-center truncate w-full">
@@ -396,8 +401,8 @@ export function FlowPoseEdit({
                   </div>
                 </Tab>
               </Tabs>
-            </div>
-            <div className="p-4 border-t flex justify-between">
+            </CardBody>
+            <CardFooter className="p-4 border-t flex justify-between">
               <Button
                 color="danger"
                 size="sm"
@@ -410,8 +415,8 @@ export function FlowPoseEdit({
               <Button color="primary" size="sm" onPress={handleSaveAndClose}>
                 {t("edit.save")}
               </Button>
-            </div>
-          </div>
+            </CardFooter>
+          </Card>
         </div>
       )}
     </>

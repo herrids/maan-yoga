@@ -8,10 +8,8 @@ import { Popover, PopoverTrigger, PopoverContent } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-import { ConfirmationModal } from "../modals/ConfirmationModal";
-
-import { FlowName } from "./FlowName";
-
+import { FlowName } from "@/components/flows/FlowName";
+import { ConfirmationModal } from "@/components/modals/ConfirmationModal";
 import { trpc } from "@/utils/trpc";
 
 interface FlowHeaderProps {

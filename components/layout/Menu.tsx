@@ -1,19 +1,36 @@
 "use client";
 
 import { Button, ListboxSection } from "@heroui/react";
-import { LogOut, Menu as MenuIcon, User, Sun, Moon, Earth } from "lucide-react";
+import {
+  LogOut,
+  Menu as MenuIcon,
+  User,
+  Sun,
+  Moon,
+  Earth,
+  Plus,
+} from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@heroui/react";
 import { Listbox, ListboxItem } from "@heroui/react";
 import { useTheme } from "next-themes";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
-import { useRouter } from "@/i18n/navigation";
+import { useRouter as useI18nRouter } from "@/i18n/navigation";
 import { createClient } from "@/utils/supabase/client";
+import { trpc } from "@/utils/trpc";
 
 export default function Menu() {
   const { theme, setTheme } = useTheme();
   const locale = useLocale();
+  const i18nRouter = useI18nRouter();
+  const t = useTranslations("menu");
   const router = useRouter();
+  const createFlowMutation = trpc.flow.createFlow.useMutation({
+    onSuccess: (data) => {
+      router.push(`/flows/${data.id}`);
+    },
+  });
 
   const handleSignOut = async () => {
     const supabase = createClient();
@@ -25,7 +42,21 @@ export default function Menu() {
   const handleLanguageChange = () => {
     const newLocale = locale === "en" ? "de" : "en";
 
-    router.replace("/", { locale: newLocale });
+    i18nRouter.replace("/", { locale: newLocale });
+  };
+
+  const handleCreateFlow = async () => {
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user?.email) {
+      await createFlowMutation.mutateAsync({
+        user_email: user.email,
+        name: t("newFlow"),
+      });
+    }
   };
 
   return (
@@ -39,28 +70,35 @@ export default function Menu() {
         <Listbox>
           <ListboxSection showDivider>
             <ListboxItem
+              key="new-flow"
+              startContent={<Plus size={22} />}
+              onPress={handleCreateFlow}
+            >
+              {t("newFlow")}
+            </ListboxItem>
+            <ListboxItem
               key="flows"
               href="/flows"
               startContent={<User size={22} />}
             >
-              Meine Flows
+              {t("myFlows")}
             </ListboxItem>
           </ListboxSection>
           <ListboxSection showDivider>
             <ListboxItem
               startContent={
-                theme === "light" ? <Sun size={22} /> : <Moon size={22} />
+                theme === "light" ? <Moon size={22} /> : <Sun size={22} />
               }
               onPress={() => setTheme(theme === "light" ? "dark" : "light")}
             >
-              {theme === "light" ? "Light Mode" : "Dark Mode"}
+              {theme === "light" ? t("darkMode") : t("lightMode")}
             </ListboxItem>
             <ListboxItem
               key="language"
               startContent={<Earth size={22} />}
               onPress={handleLanguageChange}
             >
-              {locale === "en" ? "German" : "English"}
+              {locale === "en" ? t("german") : t("english")}
             </ListboxItem>
           </ListboxSection>
           <ListboxSection>
@@ -69,7 +107,7 @@ export default function Menu() {
               startContent={<LogOut size={22} />}
               onPress={handleSignOut}
             >
-              Logout
+              {t("logout")}
             </ListboxItem>
           </ListboxSection>
         </Listbox>

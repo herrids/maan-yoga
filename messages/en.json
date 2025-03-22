@@ -43,6 +43,21 @@
     "emailPlaceholder": "Enter your email",
     "passwordPlaceholder": "Enter your password"
   },
+  "auth": {
+    "createAccount": "Create your account",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "namePlaceholder": "Enter your name",
+    "emailPlaceholder": "Enter your email",
+    "passwordPlaceholder": "Enter your password",
+    "signUp": "Sign up",
+    "signIn": "Sign in",
+    "alreadyHaveAccount": "Already have an account?",
+    "errorSignUp": "Could not create account. Please try again.",
+    "checkEmail": "We have sent you an email with a link to sign in.",
+    "couldNotSignUp": "Could not create account. Please try again."
+  },
   "flowPoses": {
     "clickToEdit": "Click to edit",
     "equipment": "Equipment",
@@ -76,5 +91,14 @@
       "deletePose": "Delete pose",
       "save": "Save"
     }
+  },
+  "menu": {
+    "newFlow": "New Flow",
+    "myFlows": "My Flows",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode",
+    "german": "German",
+    "english": "English",
+    "logout": "Logout"
   }
 }
