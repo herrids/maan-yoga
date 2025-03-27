@@ -15,11 +15,58 @@
     "editDescription": "Beschreibung bearbeiten"
   },
   "home": {
-    "title1": "Deine Yoga Praxis,",
+    "logoTitle": "Yoga Flow App",
+    "title1": "Deine Übung",
     "title2": "Dein Weg",
-    "description": "Einfacher und intuitiver Yoga Flow Builder.",
+    "description": "Einfacher und intuitiver Yoga-Flow Builder.",
     "myFlows": "Meine Flows",
-    "getStarted": "Los geht's"
+    "getStarted": "Loslegen",
+    
+    "heroTitle": "Gestalte inspirierende Yoga-Sequenzen in Minuten",
+    "heroSubtitle": "Transformiere deinen Unterricht mit unserem intuitiven Sequenz-Builder für Yogalehrer und fortgeschrittene Praktizierende. Spare Zeit, finde Inspiration und erstelle ausgewogene Flows mit Leichtigkeit.",
+    "heroImageAlt": "Yogalehrer plant eine Sequenz",
+    "startBuilding": "Starte mit dem Erstellen",
+    "watchDemo": "Demo ansehen",
+    
+    "valuePropositionTitle": "Von Yogalehrern für Yogalehrer entwickelt",
+    
+    "timeSavingTitle": "Wertvolle Zeit sparen",
+    "timeSavingDesc": "Erstelle professionelle Sequenzen in Minuten statt Stunden. Gewinne Zeit zurück für Praxis und Unterricht.",
+    
+    "inspirationTitle": "Endlose Inspiration",
+    "inspirationDesc": "Greife auf eine umfangreiche Bibliothek von Asanas und Sequenzen zu, um Kreativität zu wecken und Planungsblockaden zu überwinden.",
+    
+    "sequenceTitle": "Perfekte Flow-Balance",
+    "sequenceDesc": "Erstelle mühelos ausgewogene Sequenzen mit passenden Gegenpositionen und integrierten Ausrichtungsprinzipien.",
+    
+    "builderTitle": "Intuitiver Sequenz-Builder",
+    "builderDesc": "Unser visueller Drag-and-Drop Sequenz-Builder macht das Erstellen professioneller Yoga-Flows einfach und angenehm.",
+    "builderFeature1": "Intuitive Drag-and-Drop Oberfläche zum Sequenzieren von Asanas",
+    "builderFeature2": "Füge einfach Atemhinweise, Hilfsmittel und Modifikationen hinzu",
+    "builderFeature3": "Integrierte Ausrichtungshilfen und Vorschläge für Gegenpositionen",
+    "builderImageAlt": "Screenshot der Yoga-Sequenz-Builder Oberfläche",
+    "tryBuilder": "Probiere den Sequenz-Builder",
+    
+    "testimonialsTitle": "Vertraut von Yogalehrern weltweit",
+    "testimonialsSubtitle": "Erfahre von Lehrern, die ihre Unterrichtspraxis transformiert haben",
+    
+    "testimonial1Name": "Nassim",
+    "testimonial1Title": "Vinyasa & Ashtanga Lehrerin",
+    "testimonial1Text": "Dieses Tool hat meine Unterrichtsvorbereitung komplett verändert. Ich kann jetzt durchdachte, ausgewogene Sequenzen in einem Bruchteil der Zeit erstellen und mich im Unterricht mehr auf meine Schüler konzentrieren.",
+    
+    "testimonial2Name": "Jutta",
+    "testimonial2Title": "Yoga Lehrerin & Physiotherapeutin",
+    "testimonial2Text": "Als jemand, der mehr als 15 Kurse pro Woche unterrichtet, war das Finden frischer Inspiration eine ständige Herausforderung. Jetzt kann ich schnell einzigartige Sequenzen erstellen, die meine Schüler engagiert und herausgefordert halten.",
+    
+    "testimonial3Name": "Sarah",
+    "testimonial3Title": "Yoga Begeisterte",
+    "testimonial3Text": "Als jemand, der viel Wert auf meine eigene Yoga Praxis legt, ist dieses Tool für mich ein Muss. Es macht das Erstellen von Sequenzen so viel einfacher und angenehmer.",
+    
+    "trustedBy": "Vertraut von Yoga-Studios und Trainingsprogrammen weltweit",
+    
+    "ctaTitle": "Hebe deinen Yoga-Unterricht heute auf ein neues Niveau",
+    "ctaDesc": "Schließe dich Tausenden von Yogalehrern an, die mit unserem Sequenz-Builder Zeit sparen, Inspiration finden und wirkungsvollere Kurse gestalten.",
+    "startFreeButton": "Kostenlos ausprobieren"
   },
   "notFound": {
     "title": "Seite nicht gefunden",
@@ -56,7 +103,8 @@
     "alreadyHaveAccount": "Bereits ein Konto?",
     "errorSignUp": "Konto konnte nicht erstellt werden. Bitte versuchen Sie es erneut.",
     "checkEmail": "Wir haben dir eine E-Mail mit einem Link zum Anmelden geschickt.",
-    "couldNotSignUp": "Konto konnte nicht erstellt werden. Bitte versuchen Sie es erneut."
+    "couldNotSignUp": "Konto konnte nicht erstellt werden. Bitte versuchen Sie es erneut.",
+    "errorSignIn": "Anmeldung fehlgeschlagen" 
   },
   "flowPoses": {
     "clickToEdit": "Klicken zum Bearbeiten",
@@ -100,5 +148,45 @@
     "german": "Deutsch",
     "english": "Englisch",
     "logout": "Abmelden"
+  },
+  "legal": {
+    "impressumTitle": "Impressum",
+    "companyInfo": "Verantwortlich für den Inhalt:",
+    "contactInfo": "Kontaktinformationen",
+    "disclaimerInfo": "Haftungsausschluss",
+    "disclaimer": "Die Inhalte unserer App wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.",
+    "responsibleContent": "Verantwortlich für den Inhalt",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "registeredAt": "Registriert bei",
+    "registrationNumber": "Registrierungsnummer",
+    "vatId": "USt-IdNr."
+  },
+  "privacy": {
+    "privacyTitle": "Datenschutzerklärung",
+    "privacyIntro": "Einleitung",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "privacyIntroText": "Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Diese Datenschutzerklärung informiert Sie darüber, wie wir Ihre Daten sammeln, verwenden und schützen, wenn Sie unsere Dienste nutzen.",
+    "dataController": "Verantwortliche Stelle",
+    "dataCollection": "Datenerhebung",
+    "dataCollectionText": "Wir erheben folgende Arten von Informationen, wenn Sie unseren Dienst nutzen:",
+    "dataType1": "Kontoinformationen (Name, E-Mail)",
+    "dataType2": "Nutzungsdaten (wie Sie mit unserer Anwendung interagieren)",
+    "dataType3": "Geräteinformationen (Browsertyp, IP-Adresse)",
+    "dataType4": "Cookies und ähnliche Technologien",
+    "dataPurpose": "Zweck der Datenerhebung",
+    "dataPurposeText": "Wir verwenden Ihre persönlichen Daten, um unsere Dienste bereitzustellen, zu warten und zu verbessern, sowie um mit Ihnen über Ihr Konto und Aktualisierungen unserer Dienste zu kommunizieren.",
+    "cookies": "Cookies und Tracking",
+    "cookiesText": "Wir verwenden Cookies und ähnliche Technologien, um Ihre Erfahrung zu verbessern, Nutzungsmuster zu analysieren und personalisierte Inhalte zu liefern.",
+    "userRights": "Ihre Rechte",
+    "userRightsText": "Gemäß den geltenden Datenschutzgesetzen haben Sie folgende Rechte:",
+    "rightAccess": "Recht auf Zugang zu Ihren personenbezogenen Daten",
+    "rightCorrection": "Recht auf Berichtigung ungenauer Daten",
+    "rightDeletion": "Recht auf Löschung (Recht auf Vergessenwerden)",
+    "rightRestriction": "Recht auf Einschränkung der Verarbeitung",
+    "rightPortability": "Recht auf Datenübertragbarkeit",
+    "rightObjection": "Recht auf Widerspruch gegen die Verarbeitung",
+    "lastUpdated": "Zuletzt aktualisiert"
   }
 }

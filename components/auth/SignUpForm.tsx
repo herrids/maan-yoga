@@ -33,7 +33,7 @@ export function SignUpForm() {
         throw new Error(data.error || "Failed to sign up");
       }
 
-      router.push(`/login?message=${t("auth.checkEmail")}`);
+      router.push(`/login?message=auth.checkEmail`);
     } catch (error) {
       addToast({
         title: t("auth.errorSignUp"),

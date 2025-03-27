@@ -46,6 +46,15 @@ export default {
           background: "#262725",
           foreground: "#ECF2EA",
           content1: "#2F312F",
+          neutral: {
+            50: "#262725",
+            100: "#2F312F",
+            200: "#3A3C3A",
+            300: "#454745",
+            400: "#505250",
+            500: "#5B5D5B",
+            
+          }
         }
       }
     }

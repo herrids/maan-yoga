@@ -1,21 +1,33 @@
 "use client";
 
-import { Card } from "@heroui/react";
-import { Input } from "@heroui/react";
-import { Button } from "@heroui/react";
+import { Card, Input, Button, Alert } from "@heroui/react";
 import { useTranslations } from "next-intl";
-import { useSearchParams, useRouter } from "next/navigation";
-import { addToast } from "@heroui/react";
-
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 export function LoginForm() {
   const t = useTranslations();
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const error = searchParams.get("error");
-  const message = searchParams.get("message");
+  const message = useSearchParams().get("message");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+
+  useEffect(() => {
+    if (errorMessage) {
+      setShowAlert(true);
+    }
+  }, [errorMessage]);
+
+  useEffect(() => {
+    if (message) {
+      setSuccessMessage(t(message));
+      setShowAlert(true);
+    }
+  }, [message]);
 
   const signInHandler = async (formData: FormData) => {
     try {
+      setErrorMessage("");
       const response = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -33,20 +45,16 @@ export function LoginForm() {
         throw new Error(data.error || "Failed to sign in");
       }
 
-      router.push("/");
+      router.push("/flows");
       router.refresh();
     } catch (error) {
-      addToast({
-        title: t("login.errorSignIn"),
-        description:
-          error instanceof Error ? error.message : "An error occurred",
-        color: "danger",
-      });
+      setErrorMessage(t("auth.errorSignIn"));
     }
   };
 
   const handleGoogleSignIn = async () => {
     try {
+      setErrorMessage("");
       const response = await fetch("/api/auth/google");
       const data = await response.json();
 
@@ -58,18 +66,52 @@ export function LoginForm() {
         window.location.href = data.url;
       }
     } catch (error) {
-      addToast({
-        title: t("login.errorSignIn"),
-        description:
-          error instanceof Error ? error.message : "An error occurred",
-        color: "danger",
-      });
+      setErrorMessage(t("auth.errorSignIn"));
     }
+  };
+
+  const closerAlertHandler = () => {
+    setShowAlert(false);
+    setErrorMessage("");
+  };
+
+  const AlertComponent = ({
+    color,
+    message,
+  }: {
+    color:
+      | "default"
+      | "primary"
+      | "secondary"
+      | "success"
+      | "warning"
+      | "danger";
+    message: string;
+  }) => {
+    return (
+      <Alert
+        hideIconWrapper
+        color={color}
+        isVisible={showAlert}
+        variant="flat"
+        onClose={closerAlertHandler}
+      >
+        {message}
+      </Alert>
+    );
   };
 
   return (
     <div className="flex min-h-screen flex-col items-center py-2">
-      {message && <div className="mb-4 text-sm text-green-600">{message}</div>}
+      <div className="w-full max-w-md p-8">
+        {showAlert && errorMessage && (
+          <AlertComponent color="danger" message={errorMessage} />
+        )}
+        {showAlert && successMessage && (
+          <AlertComponent color="success" message={successMessage} />
+        )}
+      </div>
+
       <Card className="w-full max-w-md p-8">
         <div className="mb-8">
           <h2 className="text-center text-3xl font-bold tracking-tight">
@@ -105,9 +147,6 @@ export function LoginForm() {
               />
             </div>
           </div>
-
-          {error && <div className="text-sm text-red-600">{error}</div>}
-
           <div>
             <Button className="w-full" type="submit">
               {t("login.signIn")}
@@ -121,7 +160,7 @@ export function LoginForm() {
               <div className="w-full border-t border-gray-300" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-white px-2 text-gray-500">
+              <span className="bg-white dark:bg-neutral-300 px-2 text-gray-500 dark:text-gray-200">
                 {t("login.orContinueWith")}
               </span>
             </div>

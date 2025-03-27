@@ -1,6 +1,8 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
+import { getTranslations } from "next-intl/server";
+import Link from "next/link";
 
 import { Providers } from "../providers";
 
@@ -40,6 +42,7 @@ export default async function RootLayout({
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  const t = await getTranslations("legal");
 
   return (
     <html suppressHydrationWarning lang={locale}>
@@ -61,7 +64,25 @@ export default async function RootLayout({
             <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
               {children}
             </main>
-            <footer className="w-full flex items-center justify-center py-3" />
+            <footer className="w-full flex items-center justify-center py-6 border-t border-neutral-200 dark:border-neutral-800">
+              <div className="flex gap-6 text-sm text-neutral-500">
+                <Link
+                  className="hover:text-primary-600 transition-colors"
+                  href={`/${locale}/legal-notice`}
+                >
+                  {locale === "de" ? "Impressum" : "Legal Notice"}
+                </Link>
+                <Link
+                  className="hover:text-primary-600 transition-colors"
+                  href={`/${locale}/data-privacy`}
+                >
+                  {locale === "de" ? "Datenschutz" : "Privacy Policy"}
+                </Link>
+                <div className="text-neutral-300 dark:text-neutral-700">
+                  ©{new Date().getFullYear()}
+                </div>
+              </div>
+            </footer>
           </div>
         </Providers>
       </body>
