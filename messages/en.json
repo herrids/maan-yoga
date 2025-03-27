@@ -1,0 +1,189 @@
+{
+  "flows": {
+    "title": "My Yoga Flows",
+    "newFlow": "New Flow",
+    "backButton": "Back to overview",
+    "createdAt": "Created at",
+    "moreOptions": "More options",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "deleteFlow": "Delete Flow",
+    "deleteFlowConfirmation": "Are you sure you want to delete the flow {name}?",
+    "descriptionPlaceholder": "Enter your description",
+    "save": "Save",
+    "noDescription": "No description available",
+    "editDescription": "Edit description"
+  },
+  "home": {
+    "logoTitle": "Yoga Flow App",
+    "title1": "Your Practice",
+    "title2": "Your Path",
+    "description": "Simple and intuitive yoga flow builder.",
+    "myFlows": "My Flows",
+    "getStarted": "Get Started",
+    
+    "heroTitle": "Design Inspiring Yoga Sequences in Minutes",
+    "heroSubtitle": "Transform your teaching with our intuitive sequence builder designed for yoga instructors and advanced practitioners. Save time, find inspiration, and create balanced flows with ease.",
+    "heroImageAlt": "Yoga teacher planning a sequence",
+    "startBuilding": "Start Building Flows",
+    "watchDemo": "Watch Demo",
+    
+    "valuePropositionTitle": "Designed for Yoga Teachers, By Yoga Teachers",
+    
+    "timeSavingTitle": "Save Precious Time",
+    "timeSavingDesc": "Create professional sequences in minutes instead of hours. Reclaim your time for practice and teaching.",
+    
+    "inspirationTitle": "Endless Inspiration",
+    "inspirationDesc": "Access a vast library of poses and sequences to spark creativity and overcome planning blocks.",
+    
+    "sequenceTitle": "Perfect Flow Balance",
+    "sequenceDesc": "Easily create balanced sequences with proper counter-poses and alignment principles built in.",
+    
+    "builderTitle": "Intuitive Sequence Builder",
+    "builderDesc": "Our visual drag-and-drop sequence builder makes creating professional yoga flows simple and enjoyable.",
+    "builderFeature1": "Intuitive drag-and-drop interface for sequencing asanas",
+    "builderFeature2": "Add breath cues, props, and modifications easily",
+    "builderFeature3": "Built-in alignment guides and counter-pose suggestions",
+    "builderImageAlt": "Screenshot of yoga sequence builder interface",
+    "tryBuilder": "Try the Sequence Builder",
+    
+    "testimonialsTitle": "Trusted by Yoga Teachers Worldwide",
+    "testimonialsSubtitle": "Hear from instructors who've transformed their teaching practice",
+    
+    "testimonial1Name": "Nassim",
+    "testimonial1Title": "Vinyasa & Ashtanga Instructor",
+    "testimonial1Text": "This tool has completely transformed my class preparation. I can now create thoughtful, balanced sequences in a fraction of the time, allowing me to focus more on my students during class.",
+    
+    "testimonial2Name": "Jutta",
+    "testimonial2Title": "Yoga Instructor & Physiotherapist",
+    "testimonial2Text": "As someone teaching 15+ classes per week, finding fresh inspiration was a constant challenge. Now I can quickly create unique sequences that keep my students engaged and challenged.",
+    
+    "testimonial3Name": "Sarah",
+    "testimonial3Title": "Yoga Enthusiast",
+    "testimonial3Text": "As someone who values their own yoga practice, this tool is a must-have for me. It makes creating sequences so much easier and more enjoyable.",
+    
+    "trustedBy": "Trusted by yoga studios and training programs",
+    
+    "ctaTitle": "Elevate Your Yoga Teaching Today",
+    "ctaDesc": "Join our community of yoga teachers who are saving time, finding inspiration, and creating more impactful classes with our sequence builder.",
+    "startFreeButton": "Use for free"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The requested page could not be found.",
+    "backButton": "Back to home",
+    "flowNotFound": {
+      "title": "Flow not found",
+      "description": "The requested yoga flow does not exist or has been deleted.",
+      "backButton": "Back to overview"
+    }
+  },
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "orContinueWith": "Or continue with",
+    "signInWithGoogle": "Sign in with Google",
+    "noAccount": "No account?",
+    "signUp": "Sign up",
+    "signIn": "Sign in",
+    "emailPlaceholder": "Enter your email",
+    "passwordPlaceholder": "Enter your password",
+    "errorSignIn": "Sign in failed"
+  },
+  "auth": {
+    "createAccount": "Create your account",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "namePlaceholder": "Enter your name",
+    "emailPlaceholder": "Enter your email",
+    "passwordPlaceholder": "Enter your password",
+    "signUp": "Sign up",
+    "signIn": "Sign in",
+    "alreadyHaveAccount": "Already have an account?",
+    "errorSignUp": "Could not create account. Please try again.",
+    "checkEmail": "We have sent you an email with a link to sign in.",
+    "couldNotSignUp": "Could not create account. Please try again."
+  },
+  "flowPoses": {
+    "clickToEdit": "Click to edit",
+    "equipment": "Equipment",
+    "dragToReorder": "Drag to reorder",
+    "errorUpdatingPose": "Error updating pose",
+    "pleaseTryAgain": "Please try again",
+    "errorCreatingPose": "Error creating pose",
+    "addPose": "Add pose",
+    "errorUpdatingPositions": "Error updating positions",
+    "pose": "Pose",
+    "poses": "Poses",
+    "edit": {
+      "modifyPose": "Modify Pose",
+      "poseOptions": "Pose options",
+      "text": "Text",
+      "image": "Image",
+      "searchPoses": "Search poses...",
+      "noPosesFound": "No poses found",
+      "showLessPoses": "Show less poses",
+      "showAllPoses": "Show all poses",
+      "breathInstructions": "Breath instructions",
+      "details": "Details",
+      "inhale": "Inhale",
+      "exhale": "Exhale",
+      "equipment": "Equipment",
+      "block": "Block",
+      "strap": "Strap",
+      "notes": "Notes",
+      "addNotesPlaceholder": "Add notes about this pose...",
+      "addNotes": "Add notes",
+      "deletePose": "Delete pose",
+      "save": "Save"
+    }
+  },
+  "menu": {
+    "newFlow": "New Flow",
+    "myFlows": "My Flows",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode",
+    "german": "German",
+    "english": "English",
+    "logout": "Logout"
+  },
+  "legal": {
+    "impressumTitle": "Legal Notice (Impressum)",
+    "companyInfo": "Responsible for Content",
+    "contactInfo": "Contact Information",
+    "disclaimerInfo": "Disclaimer",
+    "disclaimer": "The contents of our app are created with the utmost care. However, we cannot guarantee the accuracy, completeness, and timeliness of the content.",
+    "responsibleContent": "Responsible for Content",
+    "phone": "Phone",
+    "email": "Email"
+  },
+  "privacy": {
+    "privacyTitle": "Privacy Policy",
+    "privacyIntro": "Introduction",
+    "phone": "Phone",
+    "email": "Email",
+    "privacyIntroText": "We take your privacy very seriously and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you use our services.",
+    "dataController": "Data Controller",
+    "dataCollection": "Data Collection",
+    "dataCollectionText": "We collect the following types of information when you use our service:",
+    "dataType1": "Account information (name, email)",
+    "dataType2": "Usage data (how you interact with our application)",
+    "dataType3": "Device information (browser type, IP address)",
+    "dataType4": "Cookies and similar technologies",
+    "dataPurpose": "Purpose of Data Collection",
+    "dataPurposeText": "We use your personal data to provide, maintain, and improve our services, as well as to communicate with you about your account and updates to our services.",
+    "cookies": "Cookies and Tracking",
+    "cookiesText": "We use cookies and similar technologies to enhance your experience, analyze usage patterns, and deliver personalized content.",
+    "userRights": "Your Rights",
+    "userRightsText": "Under applicable data protection laws, you have the following rights:",
+    "rightAccess": "Right to access your personal data",
+    "rightCorrection": "Right to correct inaccurate data",
+    "rightDeletion": "Right to deletion (right to be forgotten)",
+    "rightRestriction": "Right to restrict processing",
+    "rightPortability": "Right to data portability",
+    "rightObjection": "Right to object to processing",
+    "lastUpdated": "Last Updated"
+  }
+}
